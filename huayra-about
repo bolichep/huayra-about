@@ -32,16 +32,17 @@ def check_sources_huayra():
    found = re.findall(r'^deb.*\s(brisa|pampero|sud).*$', sources, re.MULTILINE )
 
    result=''
-   if 'squeeze' in found:
+   if 'brisa' in found:
        result += 'brisa,'
-   if 'wheezy' in found:
+   if 'pampero' in found:
        result += 'pampero,'
-   if 'jessie' in found:
+   if 'sud' in found:
        result += 'sud,'
+   if 'torbellino' in found:
+       result += 'torbellino,'
    return result[:-1]
 ###
 def huayra():
-#  global huayra_text
 
   lsb_release = check_output(['lsb_release','-sirc']).split()
   if lsb_release[0] == 'Huayra': ### lsb_release is aware of huayra
@@ -71,18 +72,12 @@ def debian():
   return debian_text
 ###
 def kernel():
-#  global kernel_text
 
   running_kernel = check_output(['uname','-r','-v']).split()
   kernel_text = 'Kernel lanzamiento: ' + running_kernel[0] + '\n' + 'Kernel versión:' + running_kernel[3] + ' ' + running_kernel[4]
   return kernel_text
 
-
-
-#huayra()
-#debian()
-#kernel()
-
+###
 window = gtk.Window()
 
 # the screen contains all monitors
