@@ -99,7 +99,7 @@ curmon = screen.get_monitor_at_window(screen.get_active_window())
 x, y, width, height = monitors[curmon]
 #print "monitor %d: %d x %d (current)" % (curmon,width,height)  
 
-window.set_default_size(width/5,height/5)
+window.set_default_size(width/3,height/3)
 window.set_position(gtk.WIN_POS_CENTER)
 window.connect("destroy", lambda w: gtk.main_quit())
 
