@@ -67,14 +67,15 @@ def debian():
 
   base_src_code_name = check_sources_debian()
   base_dist_ver = open('/etc/debian_version','r').read().split()
-  base_dist_issue = open('/etc/issue.net','r').read().split()
+#  base_dist_issue = open('/etc/issue.net','r').read().split()
+  base_dist_issue = ['Debian']
   debian_text = 'Base: ' + base_dist_issue[0] + ' ' + base_dist_ver[0] + ' (' + base_src_code_name + ')\n'
   return debian_text
 ###
 def kernel():
 
   running_kernel = check_output(['uname','-r','-v']).split()
-  kernel_text = 'Kernel lanzamiento: ' + running_kernel[0] + '\n' + 'Kernel versión:' + running_kernel[3] + ' ' + running_kernel[4]
+  kernel_text = 'Kernel lanzamiento: ' + running_kernel[0] + '\n' + 'Kernel versión: ' + running_kernel[3] + ' ' + running_kernel[4]
   return kernel_text
 
 ###
