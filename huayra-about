@@ -2,6 +2,7 @@
 # -*- encoding: utf-8 -*-
 import argparse
 import gtk
+import glib
 from subprocess import check_output
 import re
 
@@ -63,7 +64,6 @@ def huayra():
   return huayra_text 
 ###
 def debian():
-#  global debian_text
 
   base_src_code_name = check_sources_debian()
   base_dist_ver = open('/etc/debian_version','r').read().split()
@@ -110,13 +110,13 @@ vbox = gtk.VBox(spacing=4)
 
  
 icon_theme = gtk.icon_theme_get_default()
+logo = gtk.Image()
 try:
     pixbuf = icon_theme.load_icon("applications-huayra", width/5*2/5, gtk.ICON_LOOKUP_FORCE_SVG)
-except gobject.GError, exc:
-    print "can't load icon", exc
+    logo.set_from_pixbuf(pixbuf)
+except glib.GError, exc:
+    print "No puedo cargar", exc
 
-logo = gtk.Image()
-logo.set_from_pixbuf(pixbuf)
 
 label_huayra = gtk.Label()
 label_huayra.set_markup("<span font='Sans 24' foreground='gray' >HUAYRA GNU/Linux</span>")
