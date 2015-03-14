@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Acerca de Huayra
+Comment=Averigua la version de Huayra
+Exec=huayra-about --gui
+Icon=chat-huayra
+Terminal=false
+Type=Application
+Categories=Huayra,GTK;Core;Utility;
+StartupNotify=false
