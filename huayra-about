@@ -108,14 +108,21 @@ hbox = gtk.HBox(spacing=1)
 vbox = gtk.VBox(spacing=4)
 
 
- 
 icon_theme = gtk.icon_theme_get_default()
 logo = gtk.Image()
-try:
-    pixbuf = icon_theme.load_icon("applications-huayra", width/5*2/5, gtk.ICON_LOOKUP_FORCE_SVG)
-    logo.set_from_pixbuf(pixbuf)
-except glib.GError, exc:
-    print "No puedo cargar", exc
+side = width/5*2/5
+wish_icon="applications-huayra"
+if icon_theme.has_icon(wish_icon):
+    pixbuf = icon_theme.load_icon(wish_icon, side, gtk.ICON_LOOKUP_FORCE_SVG)
+else:
+   try: 
+      pixbuf = gtk.gdk.pixbuf_new_from_file_at_size("huayra-menu-huayra.svg", side, side)
+   except glib.GError, exc:
+      pass
+
+       
+if 'pixbuf' in locals():
+   logo.set_from_pixbuf(pixbuf)
 
 
 label_huayra = gtk.Label()
