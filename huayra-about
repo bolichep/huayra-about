@@ -7,7 +7,10 @@ from subprocess import check_output
 import re
 
 def check_sources_debian():
-   sources = open('/etc/apt/sources.list').read()
+   try:
+      sources = open('/etc/apt/sources.list').read()
+   except:
+      sources = ''
 
    found = re.findall(r'^deb.*\s(squeeze|wheezy|jessie|oldstable|stable|testing).*$', sources, re.MULTILINE )
 
@@ -28,7 +31,10 @@ def check_sources_debian():
    return result[:-1]
 ###
 def check_sources_huayra():
-   sources = open('/etc/apt/sources.list').read()
+   try:
+      sources = open('/etc/apt/sources.list').read()
+   except:
+      sources = ''
 
    found = re.findall(r'^deb.*\s(brisa|pampero|sud).*$', sources, re.MULTILINE )
 
@@ -66,7 +72,10 @@ def huayra():
 def debian():
 
   base_src_code_name = check_sources_debian()
-  base_dist_ver = open('/etc/debian_version','r').read().split()
+  try:
+     base_dist_ver = open('/etc/debian_version','r').read().split()
+  except:
+     base_dist_ver = ['']
 #  base_dist_issue = open('/etc/issue.net','r').read().split()
   base_dist_issue = ['Debian']
   debian_text = 'Base: ' + base_dist_issue[0] + ' ' + base_dist_ver[0] + ' (' + base_src_code_name + ')\n'
@@ -80,6 +89,7 @@ def kernel():
 
 ###
 window = gtk.Window()
+window.set_title("Acerca de Huayra")
 
 # the screen contains all monitors
 screen = window.get_screen()
@@ -111,13 +121,14 @@ vbox = gtk.VBox(spacing=4)
 icon_theme = gtk.icon_theme_get_default()
 logo = gtk.Image()
 side = width/5*2/5
-wish_icon="applications-huayra"
+wish_icon = "applications-huayra"
+emer_icon = "huayra-menu-huayra.svg"
 if icon_theme.has_icon(wish_icon):
     pixbuf = icon_theme.load_icon(wish_icon, side, gtk.ICON_LOOKUP_FORCE_SVG)
 else:
    try: 
-      pixbuf = gtk.gdk.pixbuf_new_from_file_at_size("huayra-menu-huayra.svg", side, side)
-   except glib.GError, exc:
+      pixbuf = gtk.gdk.pixbuf_new_from_file_at_size( emer_icon, side, side)
+   except glib.GError as exc:
       pass
 
        
