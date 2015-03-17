@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name = "huayra-about",
-      version = "0.1",
+      version = "0.1.1",
       description = "Acerca de Huayra",
       author = "Pedro Boliche",
       author_email = "bolichep@gmail.com",

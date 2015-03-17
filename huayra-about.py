@@ -91,6 +91,8 @@ def kernel():
 ###
 window = gtk.Window()
 window.set_title("Acerca de Huayra")
+window_icon = os.path.dirname(os.path.realpath(__file__))+"/huayra-menu-huayra.svg"
+window.set_icon_from_file(window_icon)
 
 # the screen contains all monitors
 screen = window.get_screen()
@@ -123,7 +125,7 @@ icon_theme = gtk.icon_theme_get_default()
 logo = gtk.Image()
 side = width/5*2/5
 wish_icon = "applications-huayra"
-emer_icon = os.path.dirname(os.path.realpath(__file__))+"/huayra-menu-huayra.svg"
+emer_icon = window_icon
 if icon_theme.has_icon(wish_icon):
     pixbuf = icon_theme.load_icon(wish_icon, side, gtk.ICON_LOOKUP_FORCE_SVG)
 else:
