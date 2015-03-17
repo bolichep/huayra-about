@@ -1,6 +1,12 @@
-huayra-about (0.1) torbellino; urgency=low
+huayra-about (0.1.2) experimental; urgency=low
+
+  * Finalmente sin errores de lintian
+
+ -- Pedro Boliche <bolichep@gmail.com>  Tue, 17 Mar 2015 02:51:34 -0300
+
+huayra-about (0.1.1) experimental; urgency=low
 
   * Inicio del paquete
 
- -- Pedro Boliche <bolichep@gmail.com>  Mon, 06 Mar 2015 08:34:13 -0300
+ -- Pedro Boliche <bolichep@gmail.com>  Mon, 16 Mar 2015 08:34:13 -0300
 
