@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import os
 import argparse
 import gtk
 import glib
@@ -122,7 +123,7 @@ icon_theme = gtk.icon_theme_get_default()
 logo = gtk.Image()
 side = width/5*2/5
 wish_icon = "applications-huayra"
-emer_icon = "huayra-menu-huayra.svg"
+emer_icon = os.path.dirname(os.path.realpath(__file__))+"/huayra-menu-huayra.svg"
 if icon_theme.has_icon(wish_icon):
     pixbuf = icon_theme.load_icon(wish_icon, side, gtk.ICON_LOOKUP_FORCE_SVG)
 else:
