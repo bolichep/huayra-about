@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/python
 # -*- coding: utf-8 -*-
 import os
 import argparse
@@ -6,13 +6,24 @@ import gtk
 import glib
 from subprocess import check_output
 import re
+import glob
+
+def get_sources():
+   allsources = glob.glob('/etc/apt/sources.list.d/*.list') 
+   allsources.insert(0, '/etc/apt/sources.list' )
+
+   result = ''
+   for src in allsources:
+      try:
+         result += open(src).read()
+      except:
+         pass
+
+   return result
 
 def check_sources_debian():
-   try:
-      sources = open('/etc/apt/sources.list').read()
-   except:
-      sources = ''
-
+   sources = get_sources()
+   
    found = re.findall(r'^deb.*\s(squeeze|wheezy|jessie|oldstable|stable|testing).*$', sources, re.MULTILINE )
 
    result=''
@@ -32,12 +43,9 @@ def check_sources_debian():
    return result[:-1]
 ###
 def check_sources_huayra():
-   try:
-      sources = open('/etc/apt/sources.list').read()
-   except:
-      sources = ''
-
-   found = re.findall(r'^deb.*\s(brisa|pampero|sud).*$', sources, re.MULTILINE )
+   sources = get_sources()
+   
+   found = re.findall(r'^deb.*\s(brisa|pampero|sud|torbellino).*$', sources, re.MULTILINE )
 
    result=''
    if 'brisa' in found:
@@ -67,7 +75,14 @@ def huayra():
       huayra_code_name = 'brisa'
       huayra_raw_ver = '1.X'
 
-  huayra_text ='Versión: ' + '<span size="large" >Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' + '</span>' 
+  # ? hay repos agregados ?    
+  huayra_sources_repos =  check_sources_huayra()
+  if huayra_code_name != huayra_sources_repos :
+     huayra_sources_repos = '[' + huayra_sources_repos + ']'
+  else:
+     huayra_sources_repos = ''
+  
+  huayra_text ='Versión: ' + '<span size="large" >Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos + '</span>' 
   return huayra_text 
 ###
 def debian():
