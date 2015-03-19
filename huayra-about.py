@@ -82,7 +82,9 @@ def huayra():
   else:
      huayra_sources_repos = ''
   
-  huayra_text ='Versión: ' + '<span size="large" >Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos + '</span>' 
+  huayra_text ='Versión: ' + '<span size="large" >Huayra ' 
+  huayra_text += huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos + '</span>' 
+
   return huayra_text 
 ###
 def debian():
@@ -92,18 +94,25 @@ def debian():
      base_dist_ver = open('/etc/debian_version','r').read().split()
   except:
      base_dist_ver = ['']
-#  base_dist_issue = open('/etc/issue.net','r').read().split()
+
   base_dist_issue = ['Debian']
   debian_text = 'Base: ' + base_dist_issue[0] + ' ' + base_dist_ver[0] + ' (' + base_src_code_name + ')\n'
+
   return debian_text
 ###
 def kernel():
 
   running_kernel = check_output(['uname','-r','-v']).split()
-  kernel_text = 'Kernel lanzamiento: ' + running_kernel[0] + '\n' + 'Kernel versión: ' + running_kernel[3] + ' ' + running_kernel[4]
-  return kernel_text
+  kernel_text =  'Kernel lanzamiento: ' + running_kernel[0] + '\n' 
+  kernel_text += 'Kernel versión: ' + running_kernel[3] + ' ' + running_kernel[4]
 
+  return kernel_text
 ###
+def set_clipboard(text):
+    clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
+    clipboard.set_text(text)
+
+### ### ###
 window = gtk.Window()
 window.set_title("Acerca de Huayra")
 window_icon = os.path.dirname(os.path.realpath(__file__))+"/huayra-menu-huayra.svg"
@@ -164,11 +173,24 @@ info_version.set_markup(huayra() + '\n' + debian() + kernel())
 info_version.set_selectable(False)
 info_version.select_region(0,1)
 
+button_close = gtk.Button(label="Cerrar")
+button_copy = gtk.Button(label="Copiar al Portapapeles")
+button_close.connect("clicked", lambda x: gtk.main_quit() )
+button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() ) )
+bbox = gtk.HButtonBox()
+bbox.add(button_copy)
+bbox.add(button_close)
+bbox.set_layout(gtk.BUTTONBOX_EDGE)
+bbox.set_spacing(30)
+window.set_focus(button_close)
+
 
 hbox.add(vbox)
 vbox.add(logo)
 vbox.add(label_huayra)
 vbox.add(info_version)
+vbox.add(bbox)
+
 window.add(hbox)
 
 if __name__ == '__main__':

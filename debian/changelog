@@ -1,3 +1,10 @@
+huayra-about (0.1.3) experimental; urgency=low
+
+  * Agregada lectura de fuentes en /etc/apt/sources.list.d
+  * Agregado de Boton de Copiar al Portapapeles
+
+ -- Pedro Boliche <bolichep@gmail.com>  Thu, 19 Mar 2015 02:27:33 -0300
+
 huayra-about (0.1.2) experimental; urgency=low
 
   * Finalmente sin errores de lintian
