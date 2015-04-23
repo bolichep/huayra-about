@@ -118,31 +118,17 @@ window.set_title("Acerca de Huayra")
 window_icon = os.path.dirname(os.path.realpath(__file__))+"/huayra-menu-huayra.svg"
 window.set_icon_from_file(window_icon)
 
-# the screen contains all monitors
-screen = window.get_screen()
-#print "screen size: %d x %d" % (gtk.gdk.screen_width(),gtk.gdk.screen_height())
-
-# collect data about each monitor
-monitors = []
-nmons = screen.get_n_monitors()
-#print "there are %d monitors" % nmons
-for m in range(nmons):
-  mg = screen.get_monitor_geometry(m)
-#  print "monitor %d: %d x %d" % (m,mg.width,mg.height)
-  monitors.append(mg)
-
-# current monitor
-curmon = screen.get_monitor_at_window(screen.get_active_window())
-x, y, width, height = monitors[curmon]
-#print "monitor %d: %d x %d (current)" % (curmon,width,height)  
-
-window.set_default_size(width/3,height/3)
+width=600
+height=400
+window.set_geometry_hints( window, width, height, width, height, width, height, 0, 0, 1.5 , 1.5 )
 window.set_position(gtk.WIN_POS_CENTER)
-window.connect("destroy", lambda w: gtk.main_quit())
+window.connect("delete-event", lambda w,e: False )
+window.connect("destroy", lambda w: gtk.main_quit() )
+window.set_border_width(width/20)
 
-hbox = gtk.HBox(spacing=1)
+hbox = gtk.HBox(False,spacing=width/20)
 
-vbox = gtk.VBox(spacing=4)
+vbox = gtk.VBox(True,spacing=0)
 
 
 icon_theme = gtk.icon_theme_get_default()
@@ -157,41 +143,41 @@ else:
       pixbuf = gtk.gdk.pixbuf_new_from_file_at_size( emer_icon, side, side)
    except glib.GError as exc:
       pass
-
        
 if 'pixbuf' in locals():
    logo.set_from_pixbuf(pixbuf)
-
-
-label_huayra = gtk.Label()
-label_huayra.set_markup("<span font='Sans 24' foreground='gray' >HUAYRA GNU/Linux</span>")
-
-
+   
 info_version = gtk.Label()
 info_version.set_justify(gtk.JUSTIFY_LEFT)
 info_version.set_markup(huayra() + '\n' + debian() + kernel())
 info_version.set_selectable(False)
-info_version.select_region(0,1)
 
 button_close = gtk.Button(label="Cerrar")
-button_copy = gtk.Button(label="Copiar al Portapapeles")
+button_copy = gtk.Button(label="  Copiar al \nPortapapeles")
 button_close.connect("clicked", lambda x: gtk.main_quit() )
 button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() ) )
-bbox = gtk.HButtonBox()
+bbox = gtk.VButtonBox()
 bbox.add(button_copy)
 bbox.add(button_close)
-bbox.set_layout(gtk.BUTTONBOX_EDGE)
+bbox.set_layout(gtk.BUTTONBOX_END)
 bbox.set_spacing(30)
 window.set_focus(button_close)
 
+def draw_background(widget, event):
+   try:
+      background = gtk.gdk.pixbuf_new_from_file('huayra-about-background.svg') # ret pixbuf
+      background = background.scale_simple(width,height,1)
+      widget.window.draw_pixbuf(vbox.style.bg_gc[gtk.STATE_NORMAL], background, 0, 0, 0, 0 )
+   except glib.GError as exc:
+      pass
+   
+vbox.connect('expose-event', draw_background)
+vbox.add(gtk.Label()) # void label
+vbox.add(hbox)
+hbox.add(info_version)
+hbox.add(bbox)
 
-hbox.add(vbox)
-vbox.add(logo)
-vbox.add(label_huayra)
-vbox.add(info_version)
-vbox.add(bbox)
-
-window.add(hbox)
+window.add(vbox)
 
 if __name__ == '__main__':
   
@@ -204,3 +190,4 @@ if __name__ == '__main__':
     gtk.main()
   if args.tty:
     print info_version.get_text()    
+
