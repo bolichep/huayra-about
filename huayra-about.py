@@ -165,7 +165,7 @@ window.set_focus(button_close)
 
 def draw_background(widget, event):
    try:
-      background = gtk.gdk.pixbuf_new_from_file('huayra-about-background.svg') # ret pixbuf
+      background = gtk.gdk.pixbuf_new_from_file('/usr/share/huayra-about/huayra-about-background.svg') # ret pixbuf
       background = background.scale_simple(width,height,1)
       widget.window.draw_pixbuf(vbox.style.bg_gc[gtk.STATE_NORMAL], background, 0, 0, 0, 0 )
    except glib.GError as exc:
