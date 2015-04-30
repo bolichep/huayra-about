@@ -52,3 +52,12 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Debian build edit etc
+debian/files
+debian/huayra-about.postinst.debhelper
+debian/huayra-about.prerm.debhelper
+debian/huayra-about.substvars
+debian/huayra-about/
+nohup.out
+

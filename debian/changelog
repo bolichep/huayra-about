@@ -1,3 +1,11 @@
+huayra-about (0.1.5) experimental; urgency=medium
+
+  * Arreglado boton cerrar(?)
+  * Arreglada carga de imagen de fondo
+  * Nueva imagen de fondo temporal
+
+ -- Pedro Boliche <bolichep@gmail.com>  Thu, 30 Apr 2015 02:38:50 -0300
+
 huayra-about (0.1.4) experimental; urgency=medium
 
   * Transformado a ventana fija

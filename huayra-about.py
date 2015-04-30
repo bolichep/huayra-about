@@ -108,10 +108,22 @@ def kernel():
 
   return kernel_text
 ###
+# Callbacks
+###
 def set_clipboard(text):
     clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
     clipboard.set_text(text)
-
+###
+def on_window_delete_event(widget,event):
+	return False
+###
+def on_window_destroy(widget):
+	gtk.main_quit()
+	return False
+###
+def on_close_clicked(widget):
+	gtk.main_quit()
+	return False
 ### ### ###
 window = gtk.Window()
 window.set_title("Acerca de Huayra")
@@ -122,8 +134,8 @@ width=600
 height=400
 window.set_geometry_hints( window, width, height, width, height, width, height, 0, 0, 1.5 , 1.5 )
 window.set_position(gtk.WIN_POS_CENTER)
-window.connect("delete-event", lambda w,e: False )
-window.connect("destroy", lambda w: gtk.main_quit() )
+window.connect("delete-event", on_window_delete_event )
+window.connect("destroy", on_window_destroy )
 window.set_border_width(width/20)
 
 hbox = gtk.HBox(False,spacing=width/20)
@@ -154,7 +166,8 @@ info_version.set_selectable(False)
 
 button_close = gtk.Button(label="Cerrar")
 button_copy = gtk.Button(label="  Copiar al \nPortapapeles")
-button_close.connect("clicked", lambda x: gtk.main_quit() )
+button_close.connect("clicked", on_close_clicked )
+button_close.connect_object("clicked", gtk.Widget.destroy, window) #
 button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() ) )
 bbox = gtk.VButtonBox()
 bbox.add(button_copy)
@@ -164,13 +177,13 @@ bbox.set_spacing(30)
 window.set_focus(button_close)
 
 def draw_background(widget, event):
-   try:
-      background = gtk.gdk.pixbuf_new_from_file('/usr/share/huayra-about/huayra-about-background.svg') # ret pixbuf
-      background = background.scale_simple(width,height,1)
-      widget.window.draw_pixbuf(vbox.style.bg_gc[gtk.STATE_NORMAL], background, 0, 0, 0, 0 )
-   except glib.GError as exc:
-      pass
-   
+  try:
+    background = gtk.gdk.pixbuf_new_from_file(os.path.dirname(os.path.realpath(__file__))+'/huayra-about-background.svg') # ret pixbuf
+    background = background.scale_simple(width,height,1)
+    widget.window.draw_pixbuf(vbox.style.bg_gc[gtk.STATE_NORMAL], background, 0, 0, 0, 0 )
+  except glib.GError as exc:
+    pass
+
 vbox.connect('expose-event', draw_background)
 vbox.add(gtk.Label()) # void label
 vbox.add(hbox)
