@@ -174,28 +174,26 @@ if 'pixbuf' in locals():
    
 # Table
 info_table = gtk.Table(6,2,False)
+info_table.set_col_spacings(10)
 
-def add_label_to_table( label_text, align, col , row ):
+def add_row_to_table( label_label, label_text, row ):
 	global info_table
 	label = gtk.Label()
-	if align == 'right':
-		label.set_alignment( 0.95, 0.5) # x right y center
-	if align == 'left':
-		label.set_alignment( 0.05, 0.5) # x left y center	
-	label.set_markup( label_text )
+	label.set_alignment( 1.0, 0.5) # x right y center
+	label.set_markup( label_label )
 	label.set_selectable(False) 
-	info_table.attach(label,col, col+1, row, row+1)
-
-add_label_to_table( " "+" " * 40+" " , 'right', 0 , 0 )	# void row
-add_label_to_table( " "+" " * 40+" " , 'left', 1 , 0 )	# void row
-add_label_to_table( huayra()[0], 'right', 0 , 1 )	
-add_label_to_table( huayra()[1], 'left', 1 , 1 )	
-add_label_to_table( debian()[0], 'right', 0 , 2 )	
-add_label_to_table( debian()[1], 'left', 1 , 2 )	
-add_label_to_table( kernel()[0], 'right', 0 , 3 )	
-add_label_to_table( kernel()[1], 'left', 1 , 3 )	
-add_label_to_table( kernel()[2], 'right', 0 , 4 )	
-add_label_to_table( kernel()[3], 'left', 1 , 4 )	
+	info_table.attach(label,0, 1, row, row+1)
+	text = gtk.Label()
+	text.set_alignment( 0.0, 0.5) # x left y center	
+	text.set_markup( label_text )
+	text.set_selectable(False) 
+	info_table.attach(text ,1, 2, row, row+1)
+	
+add_row_to_table( " "        , " "         , 0 )	# void row
+add_row_to_table( huayra()[0], huayra()[1] , 1 )	
+add_row_to_table( debian()[0], debian()[1] , 2 )	
+add_row_to_table( kernel()[0], kernel()[1] , 3 )	
+add_row_to_table( kernel()[2], kernel()[3] , 4 )	
 
 
 info_version = gtk.Label() # Fake label to blow markup tags
