@@ -5,5 +5,5 @@ Exec=huayra-about --gui
 Icon=chat-huayra
 Terminal=false
 Type=Application
-Categories=GTK;Core;Utility;System;
+Categories=GTK;Core;System;Huayra;
 StartupNotify=false
