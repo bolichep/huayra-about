@@ -8,6 +8,7 @@ from subprocess import check_output
 import re
 import glob
 
+
 def get_sources():
    allsources = glob.glob('/etc/apt/sources.list.d/*.list') 
    allsources.insert(0, '/etc/apt/sources.list' )
@@ -58,6 +59,16 @@ def check_sources_huayra():
        result += 'torbellino,'
    return result[:-1]
 ###
+label_start_markup = '<span font_style="normal" font_weight="bold">'
+label_end_markup   = '</span>'
+text_start_markup  = '<span size="smaller">'
+text_end_markup    = '</span>'
+def label_set_markup(label):
+	return label_start_markup + label + label_end_markup
+###	
+def text_set_markup(text):
+	return text_start_markup + text + text_end_markup
+###
 def huayra():
 
   lsb_release = check_output(['lsb_release','-sirc']).split()
@@ -82,10 +93,10 @@ def huayra():
   else:
      huayra_sources_repos = ''
   
-  huayra_text ='Versión: ' + '<span size="large" >Huayra ' 
-  huayra_text += huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos + '</span>' 
+  huayra_label = label_set_markup ( 'Versión' )
+  huayra_text = text_set_markup ( 'Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos )
 
-  return huayra_text 
+  return huayra_label,huayra_text 
 ###
 def debian():
 
@@ -96,17 +107,19 @@ def debian():
      base_dist_ver = ['']
 
   base_dist_issue = ['Debian']
-  debian_text = 'Base: ' + base_dist_issue[0] + ' ' + base_dist_ver[0] + ' (' + base_src_code_name + ')\n'
-
-  return debian_text
+  debian_label = label_set_markup( 'Base' )
+  debian_text = text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' (' + base_src_code_name + ')' )
+  return debian_label, debian_text
 ###
 def kernel():
 
   running_kernel = check_output(['uname','-r','-v']).split()
-  kernel_text =  'Kernel lanzamiento: ' + running_kernel[0] + '\n' 
-  kernel_text += 'Kernel versión: ' + running_kernel[3] + ' ' + running_kernel[4]
-
-  return kernel_text
+  krel_label = label_set_markup( 'Kernel lanzamiento' )
+  krel_text = text_set_markup ( running_kernel[0] )
+  kver_label = label_set_markup( 'Kernel versión')
+  kver_text = text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
+  
+  return krel_label, krel_text, kver_label, kver_text
 ###
 # Callbacks
 ###
@@ -159,10 +172,33 @@ else:
 if 'pixbuf' in locals():
    logo.set_from_pixbuf(pixbuf)
    
-info_version = gtk.Label()
-info_version.set_justify(gtk.JUSTIFY_LEFT)
-info_version.set_markup(huayra() + '\n' + debian() + kernel())
-info_version.set_selectable(False)
+# Table
+info_table = gtk.Table(9,1,False)
+#info_table.set_col_spacings(10)
+
+def add_row_to_table( label_str , row ):
+	global info_table
+	margen = " " * 4 * ((row+1)%2)	# margen if odd
+	text = gtk.Label()
+	text.set_alignment( 0.0, 0.5) # x left y center	
+	text.set_markup( margen + label_str ) 
+	text.set_selectable(False) 
+	info_table.attach(text ,0, 1, row, row+1)
+	
+
+add_row_to_table( " "        , 0 )	# void row
+add_row_to_table( huayra()[0], 1 )
+add_row_to_table( huayra()[1], 2 )	
+add_row_to_table( debian()[0], 3 )
+add_row_to_table( debian()[1], 4 )	
+add_row_to_table( kernel()[0], 5 )
+add_row_to_table( kernel()[1], 6 )	
+add_row_to_table( kernel()[2], 7 )
+add_row_to_table( kernel()[3], 8 )	
+
+
+info_version = gtk.Label() # Fake label to blow markup tags
+info_version.set_markup( huayra()[0] + ' ' + huayra()[1] + '\n' + debian()[0] + ' ' + debian()[1] + '\n' + kernel()[0] + ' ' + kernel()[1] + '\n' + kernel()[2] + ' ' + kernel()[3] )
 
 button_close = gtk.Button(label="Cerrar")
 button_copy = gtk.Button(label="  Copiar al \nPortapapeles")
@@ -187,7 +223,7 @@ def draw_background(widget, event):
 vbox.connect('expose-event', draw_background)
 vbox.add(gtk.Label()) # void label
 vbox.add(hbox)
-hbox.add(info_version)
+hbox.add(info_table)
 hbox.add(bbox)
 
 window.add(vbox)
@@ -203,4 +239,5 @@ if __name__ == '__main__':
     gtk.main()
   if args.tty:
     print info_version.get_text()    
+    
 
