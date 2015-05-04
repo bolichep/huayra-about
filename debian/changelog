@@ -1,3 +1,9 @@
+huayra-about (0.1.6) experimental; urgency=medium
+
+  * Agregado al menu Sistema y a Aplicaciones/Huayra (*) 
+
+ -- Pedro Boliche <bolichep@gmail.com>  Sun, 03 May 2015 21:24:02 -0300
+
 huayra-about (0.1.5) experimental; urgency=medium
 
   * Arreglado boton cerrar(?)
