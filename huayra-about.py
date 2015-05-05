@@ -200,7 +200,8 @@ info_version = gtk.Label() # Fake label to blow markup tags
 info_version.set_markup( huayra()[0] + ' ' + huayra()[1] + '\n' + debian()[0] + ' ' + debian()[1] + '\n' + kernel()[0] + ' ' + kernel()[1] + '\n' + kernel()[2] + ' ' + kernel()[3] )
 
 button_close = gtk.Button(label="Cerrar")
-button_copy = gtk.Button(label="  Copiar al \nPortapapeles")
+button_copy = gtk.Button(label="Copiar")
+button_copy.set_tooltip_text("Copia al portapapeles")
 button_close.connect("clicked", on_close_clicked )
 button_close.connect_object("clicked", gtk.Widget.destroy, window) #
 button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() ) )
