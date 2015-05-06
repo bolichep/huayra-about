@@ -21,43 +21,46 @@ def get_sources():
          pass
 
    return result
+###
+###
+def proc_found(raw, done, distro):
+	if distro in raw:
+		done.append( distro )
+		raw.remove( distro )
 
-def check_sources_debian():
+	return raw, done
+###
+def found_suites_from_sources():
    sources = get_sources()
    
-   found = re.findall(r'^deb.*\s(squeeze|wheezy|jessie|oldstable|stable|testing).*$', sources, re.MULTILINE )
-
-   result=''
-   if 'squeeze' in found:
-       result += 'squeeze,'
-   if 'wheezy' in found:
-       result += 'wheezy,'
-   if 'jessie' in found:
-       result += 'jessie,'
-   if 'oldstable' in found:
-       result += 'oldstable,'
-   if 'stable' in found:
-       result += 'stable,'
-   if 'testing' in found:
-       result += 'testing,'
-
-   return result[:-1]
+   found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([\w-]+)', sources, re.MULTILINE ) ) )
+   
+   huayra_suites = [ 'brisa','pampero','sud','torbellino' ]
+   huayras = []
+   for suite in huayra_suites:
+	   found, huayras = proc_found( found , huayras, suite )
+	   found, huayras = proc_found( found , huayras, suite + '-updates' )
+   
+   deb_suites = [ 'squeeze','wheezy','jessie','stretch','sid','oldstable','stable','unstable','testing' ]
+   debians = []
+   for suite in deb_suites:
+	   found, debians = proc_found( found , debians, suite )
+   	   found, debians = proc_found( found , debians, suite + '-updates' )
+   	   found, debians = proc_found( found , debians, suite + '-backports' )
+      	   
+   huayra = ",".join(str(i) for i in huayras)
+   debian = ",".join(str(i) for i in debians)  	   
+   resto  = ",".join(str(i) for i in found)
+    
+   return huayra, debian, resto
+###
+def check_sources_debian():
+	nil, debian_sources_repos, nil = found_suites_from_sources()
+	return debian_sources_repos
 ###
 def check_sources_huayra():
-   sources = get_sources()
-   
-   found = re.findall(r'^deb.*\s(brisa|pampero|sud|torbellino).*$', sources, re.MULTILINE )
-
-   result=''
-   if 'brisa' in found:
-       result += 'brisa,'
-   if 'pampero' in found:
-       result += 'pampero,'
-   if 'sud' in found:
-       result += 'sud,'
-   if 'torbellino' in found:
-       result += 'torbellino,'
-   return result[:-1]
+	huayra_sources_repos, nil, nil = found_suites_from_sources()
+	return huayra_sources_repos
 ###
 label_start_markup = '<span font_style="normal" font_weight="bold">'
 label_end_markup   = '</span>'
@@ -108,7 +111,7 @@ def debian():
 
   base_dist_issue = ['Debian']
   debian_label = label_set_markup( 'Base' )
-  debian_text = text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' (' + base_src_code_name + ')' )
+  debian_text = text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' [' + base_src_code_name + ']' )
   return debian_label, debian_text
 ###
 def kernel():
