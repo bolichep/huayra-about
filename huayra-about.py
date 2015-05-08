@@ -170,7 +170,18 @@ else:
        
 if 'pixbuf' in locals():
    logo.set_from_pixbuf(pixbuf)
-   
+"""
+<a href="http://www.w3.org/"
+          style="{color: #900}
+          :link {background: #ff0}
+          :visited {background: #fff}
+          :hover {outline: thin red solid}
+          :active {background: #00f}">...</a>
+"""          
+# Link
+web_label = label_start_markup+"Web"+label_end_markup 
+web_link = text_start_markup+"<a href='http://huayra.conectarigualdad.gob.ar/'>http://huayra.conectarigualdad.gob.ar/</a>"+text_end_markup 
+
 # Table
 info_table = gtk.Table(6,2,False)
 info_table.set_col_spacings(10)
@@ -195,6 +206,7 @@ add_row_to_table( huayra()[0], huayra()[1] , 1 , "Versión de Huayra\n[Repositor
 add_row_to_table( debian()[0], debian()[1] , 2 , "Versión base de Debian\n[Repositorios habilitados]" )
 add_row_to_table( kernel()[0], kernel()[1] , 3 , "Versión de lanzamiento del kernel" )
 add_row_to_table( kernel()[2], kernel()[3] , 4 , "Versión de compilación del kernel" )
+add_row_to_table( web_label  , web_link    , 5 )
 #
 
 info_version = gtk.Label() # Fake label to blow markup tags
@@ -221,7 +233,7 @@ def draw_background(widget, event):
 vbox.connect('expose-event', draw_background)
 
 
-fixed.put(info_table, 0, 200 )
+fixed.put(info_table, 0, 170 )
 fixed.put(button_copy, 480, 230 )
 fixed.put(button_close, 480, 300 )
 
