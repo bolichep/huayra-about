@@ -220,7 +220,7 @@ button_copy.set_tooltip_text("Copia al portapapeles")
 button_close.connect("clicked", on_close_clicked )
 button_close.connect_object("clicked", gtk.Widget.destroy, window) #
 button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() ) )
-window.set_focus(button_close)
+
 
 def draw_background(widget, event):
   try:
@@ -239,6 +239,7 @@ fixed.put(button_close, 480, 300 )
 
 vbox.add(fixed)
 
+window.set_focus(button_close)
 window.add(vbox)
 
 if __name__ == '__main__':
