@@ -8,7 +8,6 @@ from subprocess import check_output
 import re
 import glob
 
-
 def get_sources():
    allsources = glob.glob('/etc/apt/sources.list.d/*.list') 
    allsources.insert(0, '/etc/apt/sources.list' )
@@ -152,12 +151,9 @@ window.set_geometry_hints( window, width, height, width, height, width, height, 
 window.set_position(gtk.WIN_POS_CENTER)
 window.connect("delete-event", on_window_delete_event )
 window.connect("destroy", on_window_destroy )
-window.set_border_width(width/20)
-
-hbox = gtk.HBox(False,spacing=width/20)
+window.set_border_width(width/30) # 20
 
 vbox = gtk.VBox(True,spacing=0)
-
 
 icon_theme = gtk.icon_theme_get_default()
 logo = gtk.Image()
@@ -178,8 +174,9 @@ if 'pixbuf' in locals():
 # Table
 info_table = gtk.Table(6,2,False)
 info_table.set_col_spacings(10)
+info_table.set_row_spacings(10)
 
-def add_row_to_table( label_label, label_text, row ):
+def add_row_to_table( label_label, label_text, row, tooltip="" ):
 	global info_table
 	label = gtk.Label()
 	label.set_alignment( 1.0, 0.5) # x right y center
@@ -190,29 +187,27 @@ def add_row_to_table( label_label, label_text, row ):
 	text.set_alignment( 0.0, 0.5) # x left y center	
 	text.set_markup( label_text )
 	text.set_selectable(False) 
+	text.set_tooltip_text(tooltip)
 	info_table.attach(text ,1, 2, row, row+1)
 	
 add_row_to_table( " "        , " "         , 0 )	# void row
-add_row_to_table( huayra()[0], huayra()[1] , 1 )	
-add_row_to_table( debian()[0], debian()[1] , 2 )	
-add_row_to_table( kernel()[0], kernel()[1] , 3 )	
-add_row_to_table( kernel()[2], kernel()[3] , 4 )	
-
+add_row_to_table( huayra()[0], huayra()[1] , 1 , "Versión de Huayra\n[Repositorios habilitados]" )
+add_row_to_table( debian()[0], debian()[1] , 2 , "Versión base de Debian\n[Repositorios habilitados]" )
+add_row_to_table( kernel()[0], kernel()[1] , 3 , "Versión de lanzamiento del kernel" )
+add_row_to_table( kernel()[2], kernel()[3] , 4 , "Versión de compilación del kernel" )
+#
 
 info_version = gtk.Label() # Fake label to blow markup tags
 info_version.set_markup( huayra()[0] + ' ' + huayra()[1] + '\n' + debian()[0] + ' ' + debian()[1] + '\n' + kernel()[0] + ' ' + kernel()[1] + '\n' + kernel()[2] + ' ' + kernel()[3] )
 
-button_close = gtk.Button(label="Cerrar")
-button_copy = gtk.Button(label="Copiar")
+fixed = gtk.Fixed()
+
+button_close = gtk.Button(label=" Cerrar ")
+button_copy = gtk.Button(label=" Copiar ")
 button_copy.set_tooltip_text("Copia al portapapeles")
 button_close.connect("clicked", on_close_clicked )
 button_close.connect_object("clicked", gtk.Widget.destroy, window) #
 button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() ) )
-bbox = gtk.VButtonBox()
-bbox.add(button_copy)
-bbox.add(button_close)
-bbox.set_layout(gtk.BUTTONBOX_END)
-bbox.set_spacing(30)
 window.set_focus(button_close)
 
 def draw_background(widget, event):
@@ -224,10 +219,13 @@ def draw_background(widget, event):
     pass
 
 vbox.connect('expose-event', draw_background)
-vbox.add(gtk.Label()) # void label
-vbox.add(hbox)
-hbox.add(info_table)
-hbox.add(bbox)
+
+
+fixed.put(info_table, 0, 200 )
+fixed.put(button_copy, 480, 230 )
+fixed.put(button_close, 480, 300 )
+
+vbox.add(fixed)
 
 window.add(vbox)
 
