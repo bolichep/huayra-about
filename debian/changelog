@@ -1,6 +1,15 @@
+huayra-about (0.1.7) experimental; urgency=medium
+
+  * Mejora en exploracion de sources.list*
+  * Widgets mudados a fijos
+  * Agregado de  tooltips
+  * Agregado web link
+
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 08 May 2015 20:56:47 -0300
+
 huayra-about (0.1.6) experimental; urgency=medium
 
-  * Agregado al menu Sistema y a Aplicaciones/Huayra (*) 
+  * Agregado al menu Sistema y a Aplicaciones/Huayra (*)
 
  -- Pedro Boliche <bolichep@gmail.com>  Sun, 03 May 2015 21:24:02 -0300
 
