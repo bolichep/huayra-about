@@ -1,3 +1,9 @@
+huayra-about (0.1.8) experimental; urgency=medium
+
+  * Add web link bg 
+
+ -- Pedro Boliche <bolichep@gmail.com>  Sun, 17 May 2015 00:16:20 -0300
+
 huayra-about (0.1.7) experimental; urgency=medium
 
   * Mejora en exploracion de sources.list*
