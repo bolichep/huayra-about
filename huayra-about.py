@@ -193,12 +193,13 @@ def add_row_to_table( label_label, label_text, row, tooltip="" ):
 	label.set_alignment( 1.0, 0.5) # x right y center
 	label.set_markup( label_label )
 	label.set_selectable(False) 
-	info_table.attach(label,0, 1, row, row+1)
+	info_table.attach(label,0, 1, row, row+1) 
 	text = gtk.Label()
 	text.set_alignment( 0.0, 0.5) # x left y center	
 	text.set_markup( label_text )
 	text.set_selectable(False) 
 	text.set_tooltip_text(tooltip)
+	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#d1e6d1' ) )
 	info_table.attach(text ,1, 2, row, row+1)
 	
 add_row_to_table( " "        , " "         , 0 )	# void row
