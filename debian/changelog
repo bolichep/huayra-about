@@ -1,6 +1,12 @@
+huayra-about (0.1.9) unstable; urgency=medium
+
+  * Empaquetado para Huayra
+
+ -- Ignacio Juan Martín Benedetti <tranceway@gmail.com>  Fri, 22 May 2015 14:48:30 -0300
+
 huayra-about (0.1.8) experimental; urgency=medium
 
-  * Add web link bg 
+  * Add web link bg
 
  -- Pedro Boliche <bolichep@gmail.com>  Sun, 17 May 2015 00:16:20 -0300
 

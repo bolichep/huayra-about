@@ -1,5 +1,5 @@
 Source: huayra-about
-Maintainer: Pedro Boliche <bolichep@gmail.com>
+Maintainer: Ignacio Juan Martín Benedetti <tranceway@gmail.com>
 Section: python
 Priority: optional
 Build-Depends: python (>= 2.6.6-3), debhelper (>= 9.0)
@@ -11,7 +11,7 @@ Package: huayra-about
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}
 Description: Acerca de Huayra
- Lista información referida a las versiones de la instalación de 
- Huayra, Debian y el Kernel. Esta información se presenta en una ventana y/o 
+ Lista información referida a las versiones de la instalación de
+ Huayra, Debian y el Kernel. Esta información se presenta en una ventana y/o
  en la consola.
 
