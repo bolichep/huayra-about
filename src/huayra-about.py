@@ -1,15 +1,21 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
-import os
+
 import argparse
-import gtk
 import glib
-from subprocess import check_output
-import re
 import glob
+import gtk
+import os.path
+import re
+
+from subprocess import check_output
+
+
+APP_PATH = os.path.dirname(os.path.realpath(__file__))
+
 
 def get_sources():
-   allsources = glob.glob('/etc/apt/sources.list.d/*.list') 
+   allsources = glob.glob('/etc/apt/sources.list.d/*.list')
    allsources.insert(0, '/etc/apt/sources.list' )
 
    result = ''
@@ -31,26 +37,26 @@ def proc_found(raw, done, distro):
 ###
 def found_suites_from_sources():
    sources = get_sources()
-   
+
    found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([\w-]+)', sources, re.MULTILINE ) ) )
-   
+
    huayra_suites = [ 'brisa','pampero','sud','torbellino' ]
    huayras = []
    for suite in huayra_suites:
 	   found, huayras = proc_found( found , huayras, suite )
 	   found, huayras = proc_found( found , huayras, suite + '-updates' )
-   
+
    deb_suites = [ 'squeeze','wheezy','jessie','stretch','sid','oldstable','stable','unstable','testing' ]
    debians = []
    for suite in deb_suites:
 	   found, debians = proc_found( found , debians, suite )
    	   found, debians = proc_found( found , debians, suite + '-updates' )
    	   found, debians = proc_found( found , debians, suite + '-backports' )
-      	   
+
    huayra = ",".join(str(i) for i in huayras)
-   debian = ",".join(str(i) for i in debians)  	   
+   debian = ",".join(str(i) for i in debians)
    resto  = ",".join(str(i) for i in found)
-    
+
    return huayra, debian, resto
 ###
 def check_sources_debian():
@@ -67,7 +73,7 @@ text_start_markup  = '<span size="smaller">'
 text_end_markup    = '</span>'
 def label_set_markup(label):
 	return label_start_markup + label + label_end_markup
-###	
+###
 def text_set_markup(text):
 	return text_start_markup + text + text_end_markup
 ###
@@ -77,7 +83,7 @@ def huayra():
   if lsb_release[0] == 'Huayra': ### lsb_release is aware of huayra
     huayra_raw_ver = lsb_release[1]
     huayra_code_name = lsb_release[2]
-  else: 
+  else:
     try:
       huayra_raw_ver = open('/etc/huayra_version','r').read()[:-1]
       if huayra_raw_ver >= "3.0" :
@@ -88,17 +94,17 @@ def huayra():
       huayra_code_name = 'brisa'
       huayra_raw_ver = '1.X'
 
-  # ? hay repos agregados ?    
+  # ? hay repos agregados ?
   huayra_sources_repos =  check_sources_huayra()
   if huayra_code_name != huayra_sources_repos :
      huayra_sources_repos = '[' + huayra_sources_repos + ']'
   else:
      huayra_sources_repos = ''
-  
+
   huayra_label = label_set_markup ( 'Versión' )
   huayra_text = text_set_markup ( 'Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos )
 
-  return huayra_label,huayra_text 
+  return huayra_label,huayra_text
 ###
 def debian():
 
@@ -120,7 +126,7 @@ def kernel():
   krel_text = text_set_markup ( running_kernel[0] )
   kver_label = label_set_markup( 'Kernel versión')
   kver_text = text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
-  
+
   return krel_label, krel_text, kver_label, kver_text
 ###
 # Callbacks
@@ -142,7 +148,7 @@ def on_close_clicked(widget):
 ### ### ###
 window = gtk.Window()
 window.set_title("Acerca de Huayra")
-window_icon = os.path.dirname(os.path.realpath(__file__))+"/huayra-menu-huayra.svg"
+window_icon = os.path.join(APP_PATH, 'media', 'huayra-menu-huayra.svg')
 window.set_icon_from_file(window_icon)
 
 width=600
@@ -163,11 +169,11 @@ emer_icon = window_icon
 if icon_theme.has_icon(wish_icon):
     pixbuf = icon_theme.load_icon(wish_icon, side, gtk.ICON_LOOKUP_FORCE_SVG)
 else:
-   try: 
+   try:
       pixbuf = gtk.gdk.pixbuf_new_from_file_at_size( emer_icon, side, side)
    except glib.GError as exc:
       pass
-       
+
 if 'pixbuf' in locals():
    logo.set_from_pixbuf(pixbuf)
 """
@@ -177,10 +183,10 @@ if 'pixbuf' in locals():
           :visited {background: #fff}
           :hover {outline: thin red solid}
           :active {background: #00f}">...</a>
-"""          
+"""
 # Link
-web_label = label_start_markup+"Web"+label_end_markup 
-web_link = text_start_markup+"<a href='http://huayra.conectarigualdad.gob.ar/'>http://huayra.conectarigualdad.gob.ar/</a>"+text_end_markup 
+web_label = label_start_markup+"Web"+label_end_markup
+web_link = text_start_markup+"<a href='http://huayra.conectarigualdad.gob.ar/'>http://huayra.conectarigualdad.gob.ar/</a>"+text_end_markup
 
 # Table
 info_table = gtk.Table(6,2,False)
@@ -192,16 +198,16 @@ def add_row_to_table( label_label, label_text, row, tooltip="" ):
 	label = gtk.Label()
 	label.set_alignment( 1.0, 0.5) # x right y center
 	label.set_markup( label_label )
-	label.set_selectable(False) 
-	info_table.attach(label,0, 1, row, row+1) 
+	label.set_selectable(False)
+	info_table.attach(label,0, 1, row, row+1)
 	text = gtk.Label()
-	text.set_alignment( 0.0, 0.5) # x left y center	
+	text.set_alignment( 0.0, 0.5) # x left y center
 	text.set_markup( label_text )
-	text.set_selectable(False) 
+	text.set_selectable(False)
 	text.set_tooltip_text(tooltip)
 	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#d1e6d1' ) )
 	info_table.attach(text ,1, 2, row, row+1)
-	
+
 add_row_to_table( " "        , " "         , 0 )	# void row
 add_row_to_table( huayra()[0], huayra()[1] , 1 , "Versión de Huayra\n[Repositorios habilitados]" )
 add_row_to_table( debian()[0], debian()[1] , 2 , "Versión base de Debian\n[Repositorios habilitados]" )
@@ -225,7 +231,7 @@ button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() 
 
 def draw_background(widget, event):
   try:
-    background = gtk.gdk.pixbuf_new_from_file(os.path.dirname(os.path.realpath(__file__))+'/huayra-about-background.svg') # ret pixbuf
+    background = gtk.gdk.pixbuf_new_from_file(os.path.join(APP_PATH, 'media', 'huayra-about-background.svg')) # ret pixbuf
     background = background.scale_simple(width,height,1)
     widget.window.draw_pixbuf(vbox.style.bg_gc[gtk.STATE_NORMAL], background, 0, 0, 0, 0 )
   except glib.GError as exc:
@@ -244,8 +250,8 @@ window.set_focus(button_close)
 window.add(vbox)
 
 if __name__ == '__main__':
-  
-  parser = argparse.ArgumentParser() 
+
+  parser = argparse.ArgumentParser()
   parser.add_argument('-g','--gui', help='Muestra una ventana con la información de versión de huayra',action='store_true')
   parser.add_argument('-t','--tty', help='Muestra la información de versión de huayra en la terminal',action='store_true',default=True)
   args = parser.parse_args()
@@ -253,6 +259,6 @@ if __name__ == '__main__':
     window.show_all()
     gtk.main()
   if args.tty:
-    print info_version.get_text()    
-    
+    print info_version.get_text()
+
 
