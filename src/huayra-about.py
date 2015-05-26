@@ -38,7 +38,7 @@ def proc_found(raw, done, distro):
 def found_suites_from_sources():
    sources = get_sources()
 
-   found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([\w-]+)', sources, re.MULTILINE ) ) )
+   found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE ) ) )
 
    huayra_suites = [ 'brisa','pampero','sud','torbellino' ]
    huayras = []
