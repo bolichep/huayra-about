@@ -40,7 +40,7 @@ def found_suites_from_sources():
 
    found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE ) ) )
 
-   huayra_suites = [ 'brisa','pampero','sud','torbellino' ]
+   huayra_suites = [ 'brisa','mate-brisa','pampero','mate-pampero','sud','torbellino' ]
    huayras = []
    for suite in huayra_suites:
 	   found, huayras = proc_found( found , huayras, suite )
@@ -51,6 +51,7 @@ def found_suites_from_sources():
    for suite in deb_suites:
 	   found, debians = proc_found( found , debians, suite )
    	   found, debians = proc_found( found , debians, suite + '-updates' )
+	   found, debians = proc_found( found , debians, suite + '/updates' )
    	   found, debians = proc_found( found , debians, suite + '-backports' )
 
    huayra = ",".join(str(i) for i in huayras)
