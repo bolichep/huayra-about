@@ -45,6 +45,7 @@ def found_suites_from_sources():
    for suite in huayra_suites:
 	   found, huayras = proc_found( found , huayras, suite )
 	   found, huayras = proc_found( found , huayras, suite + '-updates' )
+	   found, huayras = proc_found( found , huayras, suite + '-proposed' )
 
    deb_suites = [ 'squeeze','wheezy','jessie','stretch','sid','oldstable','stable','unstable','testing' ]
    debians = []
