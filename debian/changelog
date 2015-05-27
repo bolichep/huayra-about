@@ -1,3 +1,9 @@
+huayra-about (0.1.10) unstable; urgency=medium
+
+  * Fix de CopyRight
+
+ -- Ignacio Juan Martín Benedetti <tranceway@gmail.com>  Tue, 26 May 2015 10:59:14 -0300
+
 huayra-about (0.1.9) unstable; urgency=medium
 
   * Empaquetado para Huayra
