@@ -47,13 +47,15 @@ def found_suites_from_sources():
 	   found, huayras = proc_found( found , huayras, suite + '-updates' )
 	   found, huayras = proc_found( found , huayras, suite + '-proposed' )
 
-   deb_suites = [ 'squeeze','wheezy','jessie','stretch','sid','oldstable','stable','unstable','testing' ]
+   deb_suites = [ 'squeeze','oldoldstable','wheezy','oldstable','jessie','stable','stretch','testing','sid','unstable','experimental','rc-buggy' ]
    debians = []
    for suite in deb_suites:
 	   found, debians = proc_found( found , debians, suite )
    	   found, debians = proc_found( found , debians, suite + '-updates' )
 	   found, debians = proc_found( found , debians, suite + '/updates' )
+	   found, debians = proc_found( found , debians, suite + '-proposed-updates' )
    	   found, debians = proc_found( found , debians, suite + '-backports' )
+
 
    huayra = ",".join(str(i) for i in huayras)
    debian = ",".join(str(i) for i in debians)
