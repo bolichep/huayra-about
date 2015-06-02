@@ -10,6 +10,8 @@ import re
 
 from subprocess import check_output
 
+from plugins import arch
+
 
 APP_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -211,13 +213,18 @@ def add_row_to_table( label_label, label_text, row, tooltip="" ):
 add_row_to_table( " "        , " "         , 0 )	# void row
 add_row_to_table( huayra()[0], huayra()[1] , 1 , "Versión de Huayra\n[Repositorios habilitados]" )
 add_row_to_table( debian()[0], debian()[1] , 2 , "Versión base de Debian\n[Repositorios habilitados]" )
-add_row_to_table( kernel()[0], kernel()[1] , 3 , "Versión de lanzamiento del kernel" )
-add_row_to_table( kernel()[2], kernel()[3] , 4 , "Versión de compilación del kernel" )
-add_row_to_table( web_label  , web_link    , 5 )
+add_row_to_table( label_set_markup(arch.Info.label()), arch.Info.text(), 3 , "Arquitectura del sistema." )
+add_row_to_table( kernel()[2], kernel()[3] , 5 , "Versión de compilación del kernel" )
+add_row_to_table( web_label  , web_link    , 6 )
 #
 
 info_version = gtk.Label() # Fake label to blow markup tags
-info_version.set_markup( huayra()[0] + ' ' + huayra()[1] + '\n' + debian()[0] + ' ' + debian()[1] + '\n' + kernel()[0] + ' ' + kernel()[1] + '\n' + kernel()[2] + ' ' + kernel()[3] )
+info_version.set_markup(
+      huayra()[0] + ' ' + huayra()[1] + '\n'
+    + debian()[0] + ' ' + debian()[1] + '\n'
+    + arch.Info.label() + ' ' + arch.Info.text() + '\n'
+    + kernel()[2] + ' ' + kernel()[3]
+)
 
 fixed = gtk.Fixed()
 
