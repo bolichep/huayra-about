@@ -1,3 +1,12 @@
+huayra-about (0.1.11) unstable; urgency=medium
+
+  * Agregado de todas las suites de Debian
+  * Agregado de suite *-proposed
+  * Agregado de suites mate-* y */updates
+  * Ajuste en regex (suites)
+
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 29 May 2015 05:09:07 -0300
+
 huayra-about (0.1.10) unstable; urgency=medium
 
   * Fix de CopyRight

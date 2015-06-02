@@ -40,20 +40,24 @@ def proc_found(raw, done, distro):
 def found_suites_from_sources():
    sources = get_sources()
 
-   found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([\w-]+)', sources, re.MULTILINE ) ) )
+   found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE ) ) )
 
-   huayra_suites = [ 'brisa','pampero','sud','torbellino' ]
+   huayra_suites = [ 'brisa','mate-brisa','pampero','mate-pampero','sud','torbellino' ]
    huayras = []
    for suite in huayra_suites:
 	   found, huayras = proc_found( found , huayras, suite )
 	   found, huayras = proc_found( found , huayras, suite + '-updates' )
+	   found, huayras = proc_found( found , huayras, suite + '-proposed' )
 
-   deb_suites = [ 'squeeze','wheezy','jessie','stretch','sid','oldstable','stable','unstable','testing' ]
+   deb_suites = [ 'squeeze','oldoldstable','wheezy','oldstable','jessie','stable','stretch','testing','sid','unstable','experimental','rc-buggy' ]
    debians = []
    for suite in deb_suites:
 	   found, debians = proc_found( found , debians, suite )
    	   found, debians = proc_found( found , debians, suite + '-updates' )
+	   found, debians = proc_found( found , debians, suite + '/updates' )
+	   found, debians = proc_found( found , debians, suite + '-proposed-updates' )
    	   found, debians = proc_found( found , debians, suite + '-backports' )
+
 
    huayra = ",".join(str(i) for i in huayras)
    debian = ",".join(str(i) for i in debians)
