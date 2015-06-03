@@ -1,5 +1,8 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
+# Copyright 2015 - Pedro Boliche <bolichep@gmail.com>
+# Copyright 2015 - Ignacio Juan Martín Benedetti <tranceway@gmail.com>
+# License: GPLv3 (see http://www.gnu.org/licenses/gpl.html)
 
 import argparse
 import glib
