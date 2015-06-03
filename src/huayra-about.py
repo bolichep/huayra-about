@@ -73,9 +73,9 @@ def check_sources_huayra():
 	huayra_sources_repos, nil, nil = found_suites_from_sources()
 	return huayra_sources_repos
 ###
-label_start_markup = '<span font_style="normal" font_weight="bold">'
+label_start_markup = '<span font_style="normal" font_weight="bold" color="black">'
 label_end_markup   = '</span>'
-text_start_markup  = '<span size="smaller">'
+text_start_markup  = '<span size="smaller" color="black">'
 text_end_markup    = '</span>'
 def label_set_markup(label):
 	return label_start_markup + label + label_end_markup
@@ -214,12 +214,11 @@ def add_row_to_table( label_label, label_text, row, tooltip="" ):
 	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#d1e6d1' ) )
 	info_table.attach(text ,1, 2, row, row+1)
 
-add_row_to_table( " "        , " "         , 0 )	# void row
-add_row_to_table( huayra()[0], huayra()[1] , 1 , "Versión de Huayra\n[Repositorios habilitados]" )
-add_row_to_table( debian()[0], debian()[1] , 2 , "Versión base de Debian\n[Repositorios habilitados]" )
-add_row_to_table( label_set_markup(arch.Info.label()), arch.Info.text(), 3 , "Arquitectura del sistema." )
-add_row_to_table( kernel()[2], kernel()[3] , 5 , "Versión de compilación del kernel" )
-add_row_to_table( web_label  , web_link    , 6 )
+add_row_to_table( huayra()[0], huayra()[1] , 0 , "Versión de Huayra\n[Repositorios habilitados]" )
+add_row_to_table( debian()[0], debian()[1] , 1 , "Versión base de Debian\n[Repositorios habilitados]" )
+add_row_to_table( label_set_markup(arch.Info.label()), text_set_markup(arch.Info.text()), 2, "Arquitectura del sistema." )
+add_row_to_table( kernel()[2], kernel()[3] , 3 , "Versión de compilación del kernel" )
+add_row_to_table( web_label  , web_link    , 4 )
 #
 
 info_version = gtk.Label() # Fake label to blow markup tags
@@ -251,7 +250,7 @@ def draw_background(widget, event):
 vbox.connect('expose-event', draw_background)
 
 
-fixed.put(info_table, 0, 170 )
+fixed.put(info_table, 0, 220 )
 fixed.put(button_copy, 480, 230 )
 fixed.put(button_close, 480, 300 )
 
