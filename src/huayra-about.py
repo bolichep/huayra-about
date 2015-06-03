@@ -185,14 +185,7 @@ else:
 
 if 'pixbuf' in locals():
    logo.set_from_pixbuf(pixbuf)
-"""
-<a href="http://www.w3.org/"
-          style="{color: #900}
-          :link {background: #ff0}
-          :visited {background: #fff}
-          :hover {outline: thin red solid}
-          :active {background: #00f}">...</a>
-"""
+
 # Link
 web_label = label_start_markup+"Web"+label_end_markup
 web_link = text_start_markup+"<a href='http://huayra.conectarigualdad.gob.ar/'>http://huayra.conectarigualdad.gob.ar/</a>"+text_end_markup
@@ -214,7 +207,7 @@ def add_row_to_table( label_label, label_text, row, tooltip="" ):
 	text.set_markup( label_text )
 	text.set_selectable(False)
 	text.set_tooltip_text(tooltip)
-	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#d1e6d1' ) )
+	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#FAD3B9' ) ) 
 	info_table.attach(text ,1, 2, row, row+1)
 
 add_row_to_table( huayra()[0], huayra()[1] , 0 , "Versión de Huayra\n[Repositorios habilitados]" )
