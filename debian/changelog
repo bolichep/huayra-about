@@ -1,3 +1,9 @@
+huayra-about (0.1.13) unstable; urgency=medium
+
+  * Cambio de color en web link bg prelight
+
+ -- Pedro Boliche <bolichep@gmail.com>  Wed, 03 Jun 2015 17:57:11 -0300
+
 huayra-about (0.1.12) unstable; urgency=medium
 
   * Cambio de imagen de fondo.
