@@ -1,3 +1,11 @@
+huayra-about (0.1.12) unstable; urgency=medium
+
+  * Cambio de imagen de fondo.
+  * Cambio de color de texto.
+  * Se agrega información sobre la arquitectura.
+
+ -- Ignacio Juan Martín Benedetti <tranceway@gmail.com>  Wed, 03 Jun 2015 14:18:26 -0300
+
 huayra-about (0.1.11) unstable; urgency=medium
 
   * Agregado de todas las suites de Debian
