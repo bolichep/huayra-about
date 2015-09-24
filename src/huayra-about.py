@@ -199,14 +199,14 @@ info_table.set_row_spacings(10)
 
 # Memoria
 memo = (Popen(['free', '-m'], stdout=PIPE).stdout.read()).split( )
-mem_label = label_set_markup ( 'Memoria disponible' )
+mem_label = label_set_markup ( 'Memoria' )
 mem_texto = text_set_markup (memo[7] + " Mb")
 
 #CPU
 s = ""
 micro = Popen(['lscpu'], stdout=PIPE).stdout.read()
 micro = (s.join(micro)).split()
-micro_label = label_set_markup ( 'Modelo de microprocesador' )
+micro_label = label_set_markup ( 'Microprocesador' )
 
 x = 0
 while micro[x] <> "name:":
@@ -236,8 +236,8 @@ def add_row_to_table( label_label, label_text, row, tooltip="" ):
 add_row_to_table( huayra()[0], huayra()[1] , 0 , "Versión de Huayra\n[Repositorios habilitados]" )
 add_row_to_table( debian()[0], debian()[1] , 1 , "Versión base de Debian\n[Repositorios habilitados]" )
 add_row_to_table( label_set_markup(arch.Info.label()), text_set_markup(arch.Info.text()), 2, "Arquitectura del sistema." )
-add_row_to_table( mem_label  , mem_texto , 3 )
-add_row_to_table( micro_label  , micro_texto , 4 )
+add_row_to_table( mem_label  , mem_texto , 3 , "Memoria disponible" )
+add_row_to_table( micro_label  , micro_texto , 4 , "Modelo de microprocesador" )
 add_row_to_table( kernel()[2], kernel()[3] , 5 , "Versión de compilación del kernel" )
 add_row_to_table( web_label  , web_link    , 6 )
 
@@ -276,8 +276,8 @@ vbox.connect('expose-event', draw_background)
 
 
 fixed.put(info_table, 0, 220 )
-fixed.put(button_copy, 480, 230 )
-fixed.put(button_close, 480, 300 )
+fixed.put(button_copy, 480, 280 )
+fixed.put(button_close, 480, 330 )
 
 vbox.add(fixed)
 
