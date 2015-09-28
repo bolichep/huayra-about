@@ -1,3 +1,9 @@
+huayra-about (0.1.14) experimental; urgency=medium
+
+  * Mejoras Memoria RAM y modelo de CPU - Diego Accorinti <diegoacco@gmail.com>
+
+ -- Pedro Boliche <bolichep@gmail.com>  Mon, 28 Sep 2015 19:35:15 -0300
+
 huayra-about (0.1.13) unstable; urgency=medium
 
   * Cambio de color en web link bg prelight
