@@ -18,8 +18,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import info_table
 import os.path
 import subprocess
+
+##### BORRAR!!!!!
+# row -> present
+### 0
+label_start_markup = '<span font_style="normal" font_weight="bold" color="black">'
+label_end_markup   = '</span>'
+text_start_markup  = '<span size="smaller" color="black">'
+text_end_markup    = '</span>'
+### 1
+def label_set_markup(label):
+	return label_start_markup + label + label_end_markup
+### 1
+def text_set_markup(text):
+	return text_start_markup + text + text_end_markup
+
+##### BORRAR!!!!!
+
 
 LABEL = u'Arquitectura'
 
@@ -45,3 +63,8 @@ class Info(object):
 
 if __name__ == '__main__':
     print '{0}: {1}'.format(Info.label(), Info.text())
+
+else:
+    info_table.add_row_to_table( label_set_markup(Info.label()), text_set_markup(Info.text()), 2, "Arquitectura del sistema." )
+
+    print __name__
