@@ -48,12 +48,14 @@ window_icon = os.path.join(APP_PATH, 'media', 'huayra-menu-huayra.svg')
 window.set_icon_from_file(window_icon)
 
 width=600
-height=420
+height=int(round(width*0.66))
 window.set_geometry_hints( window, width, height, width, height, width, height, 0, 0, 1.5 , 1.5 )
 window.set_position(gtk.WIN_POS_CENTER)
 window.connect("delete-event", on_window_delete_event )
 window.connect("destroy", on_window_destroy )
 window.set_border_width(width/30) # 20
+
+hbox = gtk.HBox(False,spacing=width/20)
 
 vbox = gtk.VBox(True,spacing=0)
 
@@ -86,8 +88,6 @@ info_version.set_markup(
 )
 """
 
-fixed = gtk.Fixed()
-
 button_close = gtk.Button(label=" Cerrar ")
 button_copy = gtk.Button(label=" Copiar ")
 button_copy.set_tooltip_text("Copia al portapapeles")
@@ -95,6 +95,11 @@ button_close.connect("clicked", on_close_clicked )
 button_close.connect_object("clicked", gtk.Widget.destroy, window) #
 button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() ) )
 
+bbox = gtk.VButtonBox()
+bbox.add(button_copy)
+bbox.add(button_close)
+bbox.set_layout(gtk.BUTTONBOX_END)
+bbox.set_spacing(30)
 
 def draw_background(widget, event):
     try:
@@ -105,13 +110,10 @@ def draw_background(widget, event):
         pass
 
 vbox.connect('expose-event', draw_background)
-
-
-fixed.put(info_table.info_table, 0, 220 )
-fixed.put(button_copy, 480, 280 )
-fixed.put(button_close, 480, 330 )
-
-vbox.add(fixed)
+vbox.add(gtk.Label()) # void label
+vbox.add(hbox)
+hbox.add(info_table.info_table)
+hbox.add(bbox)
 
 window.set_focus(button_close)
 window.add(vbox)
