@@ -73,19 +73,6 @@ else:
 if 'pixbuf' in locals():
    logo.set_from_pixbuf(pixbuf)
 
-# cli
-info_version = gtk.Label() # Fake label to blow markup tags
-"""
-info_version.set_markup(
-      huayra()[0] + ': ' + huayra()[1] + '\n'
-    + debian()[0] + ': ' + debian()[1] + '\n'
-    + arch.Info.label() + ': ' + arch.Info.text() + '\n'
-    + kernel()[2] + ': ' + kernel()[3] + '\n'
-    + mem_label + ': ' + mem_texto + '\n'
-    + micro_label + ': ' + micro_texto + '\n'
-)
-"""
-
 fixed = gtk.Fixed()
 
 button_close = gtk.Button(label=" Cerrar ")
@@ -127,6 +114,7 @@ if __name__ == '__main__':
         window.show_all()
         gtk.main()
     if args.tty:
-        print info_version.get_text()
+        info_table.info_version.set_markup(info_table.salida_cli)
+        print info_table.info_version.get_text()
 
 
