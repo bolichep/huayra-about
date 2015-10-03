@@ -1,30 +1,12 @@
 # -*- coding: utf-8 -*-
 # Copyright 2015 - Pedro Boliche <bolichep@gmail.com>
 # License: GPLv3 (see http://www.gnu.org/licenses/gpl.html)
-
+import markup
 import info_table
 import glob
 import re
 #from subprocess import check_output, Popen, PIPE
 from subprocess import check_output
-
-##### BORRAR!!!!!
-# row -> present
-### 0
-label_start_markup = '<span font_style="normal" font_weight="bold" color="black">'
-label_end_markup   = '</span>'
-text_start_markup  = '<span size="smaller" color="black">'
-text_end_markup    = '</span>'
-### 1
-def label_set_markup(label):
-	return label_start_markup + label + label_end_markup
-### 1
-def text_set_markup(text):
-	return text_start_markup + text + text_end_markup
-
-##### BORRAR!!!!!
-
-
 
 
 # present -> suites -> sources
@@ -112,8 +94,8 @@ def huayra():
   else:
      huayra_sources_repos = ''
 
-  huayra_label = label_set_markup ( 'Versión' )
-  huayra_text = text_set_markup ( 'Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos )
+  huayra_label = markup.label_set_markup ( 'Versión' )
+  huayra_text = markup.text_set_markup ( 'Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos )
 
   return huayra_label,huayra_text
 
@@ -127,17 +109,17 @@ def debian():
      base_dist_ver = ['']
 
   base_dist_issue = ['Debian']
-  debian_label = label_set_markup( 'Base' )
-  debian_text = text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' [' + base_src_code_name + ']' )
+  debian_label = markup.label_set_markup( 'Base' )
+  debian_text = markup.text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' [' + base_src_code_name + ']' )
   return debian_label, debian_text
 ###
 def kernel():
 
   running_kernel = check_output(['uname','-r','-v']).split()
-  krel_label = label_set_markup( 'Kernel lanzamiento' )
-  krel_text = text_set_markup ( running_kernel[0] )
-  kver_label = label_set_markup( 'Kernel versión')
-  kver_text = text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
+  krel_label = markup.label_set_markup( 'Kernel lanzamiento' )
+  krel_text = markup.text_set_markup ( running_kernel[0] )
+  kver_label = markup.label_set_markup( 'Kernel versión')
+  kver_text = markup.text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
 
   return krel_label, krel_text, kver_label, kver_text
 

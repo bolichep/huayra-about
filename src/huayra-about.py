@@ -5,9 +5,9 @@
 # Copyleft 2015 - Diego Accorinti (mejoras memoria y modelo de cpu)
 # License: GPLv3 (see http://www.gnu.org/licenses/gpl.html)
 
-
-import rasti
-import info_table
+import rasti    # automatic plugin load
+import markup
+import info_table # table to add rows 'crappy(only) plugin api'
 import argparse
 import glib
 import glob
@@ -41,18 +41,6 @@ def on_close_clicked(widget):
 ###
 #
 # row -> present
-### 0
-label_start_markup = '<span font_style="normal" font_weight="bold" color="black">'
-label_end_markup   = '</span>'
-text_start_markup  = '<span size="smaller" color="black">'
-text_end_markup    = '</span>'
-### 1
-def label_set_markup(label):
-	return label_start_markup + label + label_end_markup
-### 1
-def text_set_markup(text):
-	return text_start_markup + text + text_end_markup
-
 # gui
 window = gtk.Window()
 window.set_title("Acerca de Huayra")
@@ -84,37 +72,6 @@ else:
 
 if 'pixbuf' in locals():
    logo.set_from_pixbuf(pixbuf)
-
-# Link
-web_label = label_start_markup+"Web"+label_end_markup
-web_link = text_start_markup+"<a href='http://huayra.conectarigualdad.gob.ar/'>http://huayra.conectarigualdad.gob.ar/</a>"+text_end_markup
-
-
-# Memoria
-memo = (Popen(['free', '-m'], stdout=PIPE).stdout.read()).split( )
-mem_label = label_set_markup ( 'Memoria' )
-mem_texto = text_set_markup (memo[7] + " Mb")
-
-#CPU
-s = ""
-micro = Popen(['lscpu'], stdout=PIPE).stdout.read()
-micro = (s.join(micro)).split()
-micro_label = label_set_markup ( 'Microprocesador' )
-
-x = 0
-while micro[x] <> "name:":
-	x += 1
-micro_texto = ""	
-while micro[x+1] <> "Stepping:":
-	micro_texto = micro_texto + micro[x+1] + " "
-	x += 1	
-micro_texto = text_set_markup(micro_texto)
-
-###
-info_table.add_row_to_table( mem_label  , mem_texto , 3 , "Memoria disponible" )
-info_table.add_row_to_table( micro_label  , micro_texto , 4 , "Modelo de microprocesador" )
-
-info_table.add_row_to_table( web_label  , web_link    , 6 )
 
 # cli
 info_version = gtk.Label() # Fake label to blow markup tags
