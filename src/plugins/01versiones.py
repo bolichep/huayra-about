@@ -113,18 +113,7 @@ def debian():
   debian_text = markup.text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' [' + base_src_code_name + ']' )
   return debian_label, debian_text
 ###
-def kernel():
-
-  running_kernel = check_output(['uname','-r','-v']).split()
-  krel_label = markup.label_set_markup( 'Kernel lanzamiento' )
-  krel_text = markup.text_set_markup ( running_kernel[0] )
-  kver_label = markup.label_set_markup( 'Kernel versión')
-  kver_text = markup.text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
-
-  return krel_label, krel_text, kver_label, kver_text
-
 info_table.add_row_to_table( huayra()[0], huayra()[1] , 0 , "Versión de Huayra\n[Repositorios habilitados]" )
 info_table.add_row_to_table( debian()[0], debian()[1] , 1 , "Versión base de Debian\n[Repositorios habilitados]" )
-info_table.add_row_to_table( kernel()[2], kernel()[3] , 5 , "Versión de compilación del kernel" )
 
 print __name__
