@@ -211,10 +211,10 @@ micro_label = label_set_markup ( 'Microprocesador' )
 x = 0
 while micro[x] <> "name:":
 	x += 1
-micro_texto = ""	
+micro_texto = ""
 while micro[x+1] <> "Stepping:":
 	micro_texto = micro_texto + micro[x+1] + " "
-	x += 1	
+	x += 1
 micro_texto = text_set_markup(micro_texto)
 
 
@@ -230,7 +230,7 @@ def add_row_to_table( label_label, label_text, row, tooltip="" ):
 	text.set_markup( label_text )
 	text.set_selectable(False)
 	text.set_tooltip_text(tooltip)
-	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#FAD3B9' ) ) 
+	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#FAD3B9' ) )
 	info_table.attach(text ,1, 2, row, row+1)
 
 add_row_to_table( huayra()[0], huayra()[1] , 0 , "Versión de Huayra\n[Repositorios habilitados]" )

@@ -9,7 +9,7 @@ Vcs-Git: https://github.com/bolichep/huayra-about
 
 Package: huayra-about
 Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}
+Depends: ${misc:Depends}, ${python:Depends}, base-files(>=7.1), lsb-release, coreutils (>=8.13), procps, util-linux (>=2.20.1)
 Description: Acerca de Huayra
  Lista información referida a las versiones de la instalación de
  Huayra, Debian y el Kernel. Esta información se presenta en una ventana y/o

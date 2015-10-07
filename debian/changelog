@@ -1,3 +1,9 @@
+huayra-about (0.1.15) unstable; urgency=medium
+
+  * Agregado de dependencias
+
+ -- Pedro Boliche <bolichep@gmail.com>  Wed, 07 Oct 2015 05:27:33 -0300
+
 huayra-about (0.1.14) experimental; urgency=medium
 
   * Mejoras Memoria RAM y modelo de CPU - Diego Accorinti <diegoacco@gmail.com>
