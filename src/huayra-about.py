@@ -89,33 +89,37 @@ def text_set_markup(text):
 	return text_start_markup + text + text_end_markup
 ###
 def huayra():
-
-  lsb_release = check_output(['lsb_release','-sirc']).split()
-  if lsb_release[0] == 'Huayra': ### lsb_release is aware of huayra
-    huayra_raw_ver = lsb_release[1]
-    huayra_code_name = lsb_release[2]
-  else:
     try:
-      huayra_raw_ver = open('/etc/huayra_version','r').read()[:-1]
-      if huayra_raw_ver >= "3.0" :
-        huayra_code_name = 'sud'
-      elif huayra_raw_ver >="2.0" :
-        huayra_code_name = 'pampero'
-    except IOError as e: ### huayra is not still aware of himself
-      huayra_code_name = 'brisa'
-      huayra_raw_ver = '1.X'
+        lsb_list = open('/etc/lsb-release').read().replace('\n','=').split('=')
+    except IOError as e:
+        lsb_list = []
+    lsb_release = dict(zip(lsb_list[0::2], lsb_list[1::2]))
 
-  # ? hay repos agregados ?
-  huayra_sources_repos =  check_sources_huayra()
-  if huayra_code_name != huayra_sources_repos :
-     huayra_sources_repos = '[' + huayra_sources_repos + ']'
-  else:
-     huayra_sources_repos = ''
+    if lsb_release.get("DISTRIB_ID") == 'Huayra': ### lsb_release is aware of huayra
+        huayra_raw_ver = lsb_release.get("DISTRIB_RELEASE")
+        huayra_code_name = lsb_release.get("DISTRIB_CODENAME")
+    else:
+        try:
+            huayra_raw_ver = open('/etc/huayra_version','r').read()[:-1]
+            if huayra_raw_ver >= "3.0" :
+                huayra_code_name = 'sud'
+            elif huayra_raw_ver >="2.0" :
+                huayra_code_name = 'pampero'
+        except IOError as e: ### huayra is not still aware of himself
+                huayra_code_name = 'brisa'
+                huayra_raw_ver = '1.X'
 
-  huayra_label = label_set_markup ( 'Versión' )
-  huayra_text = text_set_markup ( 'Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos )
+    # ? hay repos agregados ?
+    huayra_sources_repos =  check_sources_huayra()
+    if huayra_code_name != huayra_sources_repos :
+        huayra_sources_repos = '[' + huayra_sources_repos + ']'
+    else:
+        huayra_sources_repos = ''
 
-  return huayra_label,huayra_text
+    huayra_label = label_set_markup ( 'Versión' )
+    huayra_text = text_set_markup ( 'Huayra ' + huayra_raw_ver + ' (' + huayra_code_name +') ' +  huayra_sources_repos )
+
+    return huayra_label,huayra_text
 ###
 def debian():
 
