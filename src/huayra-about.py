@@ -136,13 +136,11 @@ def debian():
 ###
 def kernel():
 
-    running_kernel = check_output(['uname','-r','-v']).split()
-    krel_label = label_set_markup( 'Kernel lanzamiento' )
-    krel_text = text_set_markup ( running_kernel[0] )
+    running_kernel = os.uname()
     kver_label = label_set_markup( 'Kernel versión')
-    kver_text = text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
+    kver_text = text_set_markup( " ".join(running_kernel[3].split()[2:4]) )
 
-    return krel_label, krel_text, kver_label, kver_text
+    return kver_label, kver_text
 ###
 # Callbacks
 ###
@@ -242,7 +240,7 @@ add_row_to_table( debian()[0], debian()[1] , 1 , "Versión base de Debian\n[Repo
 add_row_to_table( label_set_markup(arch.Info.label()), text_set_markup(arch.Info.text()), 2, "Arquitectura del sistema." )
 add_row_to_table( mem_label  , mem_texto , 3 , "Memoria disponible" )
 add_row_to_table( micro_label  , micro_texto , 4 , "Modelo de microprocesador" )
-add_row_to_table( kernel()[2], kernel()[3] , 5 , "Versión de compilación del kernel" )
+add_row_to_table( kernel()[0], kernel()[1] , 5 , "Versión de compilación del kernel" )
 add_row_to_table( web_label  , web_link    , 6 )
 
 
@@ -253,7 +251,7 @@ info_version.set_markup(
       huayra()[0] + ': ' + huayra()[1] + '\n'
     + debian()[0] + ': ' + debian()[1] + '\n'
     + arch.Info.label() + ': ' + arch.Info.text() + '\n'
-    + kernel()[2] + ': ' + kernel()[3] + '\n'
+    + kernel()[0] + ': ' + kernel()[1] + '\n'
     + mem_label + ': ' + mem_texto + '\n'
     + micro_label + ': ' + micro_texto + '\n'
 )
