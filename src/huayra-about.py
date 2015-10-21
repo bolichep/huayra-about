@@ -22,71 +22,71 @@ APP_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
 def get_sources():
-   allsources = glob.glob('/etc/apt/sources.list.d/*.list')
-   allsources.insert(0, '/etc/apt/sources.list' )
+    allsources = glob.glob('/etc/apt/sources.list.d/*.list')
+    allsources.insert(0, '/etc/apt/sources.list' )
 
-   result = ''
-   for src in allsources:
-      try:
-         result += open(src).read()
-      except:
-         pass
+    result = ''
+    for src in allsources:
+        try:
+            result += open(src).read()
+        except:
+            pass
 
-   return result
+    return result
 ###
 ###
 def proc_found(raw, done, distro):
-	if distro in raw:
-		done.append( distro )
-		raw.remove( distro )
+    if distro in raw:
+        done.append( distro )
+        raw.remove( distro )
 
-	return raw, done
+    return raw, done
 ###
 def found_suites_from_sources():
-   sources = get_sources()
+    sources = get_sources()
 
-   found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE ) ) )
+    found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE ) ) )
 
-   huayra_suites = [ 'brisa','mate-brisa','pampero','mate-pampero','sud','torbellino' ]
-   huayras = []
-   for suite in huayra_suites:
-	   found, huayras = proc_found( found , huayras, suite )
-	   found, huayras = proc_found( found , huayras, suite + '-updates' )
-	   found, huayras = proc_found( found , huayras, suite + '-proposed' )
+    huayra_suites = [ 'brisa','mate-brisa','pampero','mate-pampero','sud','torbellino' ]
+    huayras = []
+    for suite in huayra_suites:
+        found, huayras = proc_found( found , huayras, suite )
+        found, huayras = proc_found( found , huayras, suite + '-updates' )
+        found, huayras = proc_found( found , huayras, suite + '-proposed' )
 
-   deb_suites = [ 'squeeze','oldoldstable','wheezy','oldstable','jessie','stable','stretch','testing','sid','unstable','experimental','rc-buggy' ]
-   debians = []
-   for suite in deb_suites:
-	   found, debians = proc_found( found , debians, suite )
-   	   found, debians = proc_found( found , debians, suite + '-updates' )
-	   found, debians = proc_found( found , debians, suite + '/updates' )
-	   found, debians = proc_found( found , debians, suite + '-proposed-updates' )
-   	   found, debians = proc_found( found , debians, suite + '-backports' )
+    deb_suites = [ 'squeeze','oldoldstable','wheezy','oldstable','jessie','stable','stretch','testing','sid','unstable','experimental','rc-buggy' ]
+    debians = []
+    for suite in deb_suites:
+        found, debians = proc_found( found , debians, suite )
+        found, debians = proc_found( found , debians, suite + '-updates' )
+        found, debians = proc_found( found , debians, suite + '/updates' )
+        found, debians = proc_found( found , debians, suite + '-proposed-updates' )
+        found, debians = proc_found( found , debians, suite + '-backports' )
 
 
-   huayra = ",".join(str(i) for i in huayras)
-   debian = ",".join(str(i) for i in debians)
-   resto  = ",".join(str(i) for i in found)
+    huayra = ",".join(str(i) for i in huayras)
+    debian = ",".join(str(i) for i in debians)
+    resto  = ",".join(str(i) for i in found)
 
-   return huayra, debian, resto
+    return huayra, debian, resto
 ###
 def check_sources_debian():
-	nil, debian_sources_repos, nil = found_suites_from_sources()
-	return debian_sources_repos
+    nil, debian_sources_repos, nil = found_suites_from_sources()
+    return debian_sources_repos
 ###
 def check_sources_huayra():
-	huayra_sources_repos, nil, nil = found_suites_from_sources()
-	return huayra_sources_repos
+    huayra_sources_repos, nil, nil = found_suites_from_sources()
+    return huayra_sources_repos
 ###
 label_start_markup = '<span font_style="normal" font_weight="bold" color="black">'
 label_end_markup   = '</span>'
 text_start_markup  = '<span size="smaller" color="black">'
 text_end_markup    = '</span>'
 def label_set_markup(label):
-	return label_start_markup + label + label_end_markup
+    return label_start_markup + label + label_end_markup
 ###
 def text_set_markup(text):
-	return text_start_markup + text + text_end_markup
+    return text_start_markup + text + text_end_markup
 ###
 def huayra():
     try:
@@ -106,8 +106,8 @@ def huayra():
             elif huayra_raw_ver >="2.0" :
                 huayra_code_name = 'pampero'
         except IOError as e: ### huayra is not still aware of himself
-                huayra_code_name = 'brisa'
-                huayra_raw_ver = '1.X'
+            huayra_code_name = 'brisa'
+            huayra_raw_ver = '1.X'
 
     # ? hay repos agregados ?
     huayra_sources_repos =  check_sources_huayra()
@@ -123,26 +123,26 @@ def huayra():
 ###
 def debian():
 
-  base_src_code_name = check_sources_debian()
-  try:
-     base_dist_ver = open('/etc/debian_version','r').read().split()
-  except:
-     base_dist_ver = ['']
+    base_src_code_name = check_sources_debian()
+    try:
+        base_dist_ver = open('/etc/debian_version','r').read().split()
+    except:
+        base_dist_ver = ['']
 
-  base_dist_issue = ['Debian']
-  debian_label = label_set_markup( 'Base' )
-  debian_text = text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' [' + base_src_code_name + ']' )
-  return debian_label, debian_text
+    base_dist_issue = ['Debian']
+    debian_label = label_set_markup( 'Base' )
+    debian_text = text_set_markup( base_dist_issue[0] + ' ' + base_dist_ver[0] + ' [' + base_src_code_name + ']' )
+    return debian_label, debian_text
 ###
 def kernel():
 
-  running_kernel = check_output(['uname','-r','-v']).split()
-  krel_label = label_set_markup( 'Kernel lanzamiento' )
-  krel_text = text_set_markup ( running_kernel[0] )
-  kver_label = label_set_markup( 'Kernel versión')
-  kver_text = text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
+    running_kernel = check_output(['uname','-r','-v']).split()
+    krel_label = label_set_markup( 'Kernel lanzamiento' )
+    krel_text = text_set_markup ( running_kernel[0] )
+    kver_label = label_set_markup( 'Kernel versión')
+    kver_text = text_set_markup( running_kernel[3] + ' ' + running_kernel[4] )
 
-  return krel_label, krel_text, kver_label, kver_text
+    return krel_label, krel_text, kver_label, kver_text
 ###
 # Callbacks
 ###
@@ -151,15 +151,15 @@ def set_clipboard(text):
     clipboard.set_text(text)
 ###
 def on_window_delete_event(widget,event):
-	return False
+    return False
 ###
 def on_window_destroy(widget):
-	gtk.main_quit()
-	return False
+    gtk.main_quit()
+    return False
 ###
 def on_close_clicked(widget):
-	gtk.main_quit()
-	return False
+    gtk.main_quit()
+    return False
 ### ### ###
 window = gtk.Window()
 window.set_title("Acerca de Huayra")
@@ -184,13 +184,13 @@ emer_icon = window_icon
 if icon_theme.has_icon(wish_icon):
     pixbuf = icon_theme.load_icon(wish_icon, side, gtk.ICON_LOOKUP_FORCE_SVG)
 else:
-   try:
-      pixbuf = gtk.gdk.pixbuf_new_from_file_at_size( emer_icon, side, side)
-   except glib.GError as exc:
-      pass
+    try:
+        pixbuf = gtk.gdk.pixbuf_new_from_file_at_size( emer_icon, side, side)
+    except glib.GError as exc:
+        pass
 
 if 'pixbuf' in locals():
-   logo.set_from_pixbuf(pixbuf)
+    logo.set_from_pixbuf(pixbuf)
 
 # Link
 web_label = label_start_markup+"Web"+label_end_markup
@@ -214,28 +214,28 @@ micro_label = label_set_markup ( 'Microprocesador' )
 
 x = 0
 while micro[x] <> "name:":
-	x += 1
+    x += 1
 micro_texto = ""
 while micro[x+1] <> "Stepping:":
-	micro_texto = micro_texto + micro[x+1] + " "
-	x += 1
+    micro_texto = micro_texto + micro[x+1] + " "
+    x += 1
 micro_texto = text_set_markup(micro_texto)
 
 
 def add_row_to_table( label_label, label_text, row, tooltip="" ):
-	global info_table
-	label = gtk.Label()
-	label.set_alignment( 1.0, 0.5) # x right y center
-	label.set_markup( label_label )
-	label.set_selectable(False)
-	info_table.attach(label,0, 1, row, row+1)
-	text = gtk.Label()
-	text.set_alignment( 0.0, 0.5) # x left y center
-	text.set_markup( label_text )
-	text.set_selectable(False)
-	text.set_tooltip_text(tooltip)
-	text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#FAD3B9' ) )
-	info_table.attach(text ,1, 2, row, row+1)
+    global info_table
+    label = gtk.Label()
+    label.set_alignment( 1.0, 0.5) # x right y center
+    label.set_markup( label_label )
+    label.set_selectable(False)
+    info_table.attach(label,0, 1, row, row+1)
+    text = gtk.Label()
+    text.set_alignment( 0.0, 0.5) # x left y center
+    text.set_markup( label_text )
+    text.set_selectable(False)
+    text.set_tooltip_text(tooltip)
+    text.modify_base(gtk.STATE_PRELIGHT, gtk.gdk.Color( '#FAD3B9' ) )
+    info_table.attach(text ,1, 2, row, row+1)
 
 add_row_to_table( huayra()[0], huayra()[1] , 0 , "Versión de Huayra\n[Repositorios habilitados]" )
 add_row_to_table( debian()[0], debian()[1] , 1 , "Versión base de Debian\n[Repositorios habilitados]" )
@@ -269,12 +269,12 @@ button_copy.connect("clicked", lambda x: set_clipboard( info_version.get_text() 
 
 
 def draw_background(widget, event):
-  try:
-    background = gtk.gdk.pixbuf_new_from_file(os.path.join(APP_PATH, 'media', 'huayra-about-background.svg')) # ret pixbuf
-    background = background.scale_simple(width,height,1)
-    widget.window.draw_pixbuf(vbox.style.bg_gc[gtk.STATE_NORMAL], background, 0, 0, 0, 0 )
-  except glib.GError as exc:
-    pass
+    try:
+        background = gtk.gdk.pixbuf_new_from_file(os.path.join(APP_PATH, 'media', 'huayra-about-background.svg')) # ret pixbuf
+        background = background.scale_simple(width,height,1)
+        widget.window.draw_pixbuf(vbox.style.bg_gc[gtk.STATE_NORMAL], background, 0, 0, 0, 0 )
+    except glib.GError as exc:
+        pass
 
 vbox.connect('expose-event', draw_background)
 
@@ -290,14 +290,12 @@ window.add(vbox)
 
 if __name__ == '__main__':
 
-  parser = argparse.ArgumentParser()
-  parser.add_argument('-g','--gui', help='Muestra una ventana con la información de versión de huayra',action='store_true')
-  parser.add_argument('-t','--tty', help='Muestra la información de versión de huayra en la terminal',action='store_true',default=True)
-  args = parser.parse_args()
-  if args.gui:
-    window.show_all()
-    gtk.main()
-  if args.tty:
-    print info_version.get_text()
-
-
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-g','--gui', help='Muestra una ventana con la información de versión de huayra',action='store_true')
+    parser.add_argument('-t','--tty', help='Muestra la información de versión de huayra en la terminal',action='store_true',default=True)
+    args = parser.parse_args()
+    if args.gui:
+        window.show_all()
+        gtk.main()
+    if args.tty:
+        print info_version.get_text()
