@@ -11,28 +11,23 @@ import glib
 import glob
 import gtk
 import os
-import re
 
 from subprocess import check_output, Popen, PIPE
 
 from plugins import arch
 
+from aptsources import sourceslist
 
 APP_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
-def get_sources():
-    allsources = glob.glob('/etc/apt/sources.list.d/*.list')
-    allsources.insert(0, '/etc/apt/sources.list' )
+def get_suites(sources):
+    suites = []
+    for entry in sources:
+        if ( not entry.disabled ):
+            suites.append(entry.dist)
 
-    result = ''
-    for src in allsources:
-        try:
-            result += open(src).read()
-        except:
-            pass
-
-    return result
+    return suites
 ###
 ###
 def proc_found(raw, done, distro):
@@ -43,9 +38,9 @@ def proc_found(raw, done, distro):
     return raw, done
 ###
 def found_suites_from_sources():
-    sources = get_sources()
+    sources = sourceslist.SourcesList()
 
-    found = list ( set ( re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE ) ) )
+    found = list ( set ( get_suites(sources) ) )
 
     huayra_suites = [ 'brisa','mate-brisa','pampero','mate-pampero','sud','torbellino' ]
     huayras = []
