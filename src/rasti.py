@@ -6,7 +6,7 @@ import fnmatch
 import os
 
 def load():
-    PLUGINSPATH = 'src/plugins'
+    PLUGINSPATH = os.path.dirname(os.path.realpath(__file__)) + '/plugins'
     plugs = os.listdir(PLUGINSPATH)
     plugs.sort()
 
