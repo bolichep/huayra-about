@@ -1,3 +1,9 @@
+huayra-about (0.1.16) unstable; urgency=medium
+
+  * dummy with rasti-suelto
+
+ -- Pedro Boliche <bolichep@gmail.com>  Thu, 05 Nov 2015 23:40:58 -0300
+
 huayra-about (0.1.14) experimental; urgency=medium
 
   * Mejoras Memoria RAM y modelo de CPU - Diego Accorinti <diegoacco@gmail.com>
