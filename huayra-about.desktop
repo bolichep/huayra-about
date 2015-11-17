@@ -2,7 +2,7 @@
 Name=Acerca de Huayra
 Comment=Averigua la versión de Huayra
 Exec=huayra-about --gui
-Icon=chat-huayra
+Icon=huayra-about
 Terminal=false
 Type=Application
 Categories=GTK;Core;System;Huayra;
