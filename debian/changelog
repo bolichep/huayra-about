@@ -1,3 +1,12 @@
+huayra-about (0.1.18) experimental; urgency=medium
+
+  * Agregado de icono como hicolor
+  * Cambiado read/regex por aptsources(python-apt) para obtener suites
+  * Cambio comando uname por llamada os.uname()
+  * Cambio comando lsb-release por read /etc/lsb-release
+
+ -- Pedro Boliche <bolichep@gmail.com>  Sun, 15 Nov 2015 03:14:46 -0300
+
 huayra-about (0.1.15) unstable; urgency=medium
 
   * Agregado de dependencias
