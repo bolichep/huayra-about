@@ -12,6 +12,7 @@ setup(name = "huayra-about",
                      ("share/huayra-about/media", ["src/media/huayra-menu-huayra.svg","src/media/huayra-about-background.svg"]),
                      ("share/huayra-about/plugins", ["src/plugins/__init__.py","src/plugins/arch.py","src/plugins/versiones.py","src/plugins/04link.py","src/plugins/cpu_mem.py"]),
                      ("share/applications", ["huayra-about.desktop"]),
+                     ("share/icons/hicolor/scalable/apps",["src/media/huayra-about.svg"]),
                      ("share/man/man1", ["huayra-about.1"]) ] )
 
 
