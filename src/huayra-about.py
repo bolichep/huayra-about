@@ -195,21 +195,22 @@ info_table.set_col_spacings(10)
 info_table.set_row_spacings(10)
 
 # Memoria
-memo = (Popen(['free', '-m'], stdout=PIPE).stdout.read()).split( )
+memo = open('/proc/meminfo').read().split()
 mem_label = label_set_markup ( 'Memoria' )
-mem_texto = text_set_markup (memo[7] + " Mb")
+mem_texto = text_set_markup (str(int(memo[1])/1024) + " MB")
 
 #CPU
 s = ""
-micro = Popen(['lscpu'], stdout=PIPE).stdout.read()
+micro = open('/proc/cpuinfo').read()
 micro = (s.join(micro)).split()
 micro_label = label_set_markup ( 'Microprocesador' )
 
 x = 0
-while micro[x] <> "name:":
+while micro[x] <> "name":
     x += 1
+x += 1 # skip ":"
 micro_texto = ""
-while micro[x+1] <> "Stepping:":
+while micro[x+1] <> "stepping":
     micro_texto = micro_texto + micro[x+1] + " "
     x += 1
 micro_texto = text_set_markup(micro_texto)
