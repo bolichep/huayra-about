@@ -5,27 +5,28 @@ import imp
 import fnmatch
 import os
 
+
 def load():
     PLUGINSPATH = os.path.dirname(os.path.realpath(__file__)) + '/plugins'
-    plugs = os.listdir(PLUGINSPATH)
-    plugs.sort()
+    plugs = sorted(os.listdir(PLUGINSPATH))
 
     for fname in plugs:
-        if not os.path.isdir(fname) and  fnmatch.fnmatch(fname,'*.py'):
+        if not os.path.isdir(fname) and fnmatch.fnmatch(fname, '*.py'):
             plug = fname[:fname.find('.')]
-            print plug
+            #rint plug, "$"
         else:
             continue
         if True:
 #        try:
-            fp, path, desc = imp.find_module(plug,[PLUGINSPATH])
+            fp, path, desc = imp.find_module(plug, [PLUGINSPATH])
             imp.load_module(plug, fp, path, desc)
-            print path
+#            print path
 #        except:
-            #print "Except"
-            #pass
+            # print "Except"
+            # pass
 #        finally:
-            if fp: fp.close()
+            if fp:
+                fp.close()
 
 
-print __name__
+#rint __name__

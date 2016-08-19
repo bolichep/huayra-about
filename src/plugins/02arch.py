@@ -27,6 +27,7 @@ LABEL = u'Arquitectura'
 
 
 class Info(object):
+
     @staticmethod
     def text():
         cmd = ['uname', '-m']
@@ -49,6 +50,6 @@ if __name__ == '__main__':
     print '{0}: {1}'.format(Info.label(), Info.text())
 
 else:
-    info_table.add_row_to_table( markup.label_set_markup(Info.label()), markup.text_set_markup(Info.text()), 2, "Arquitectura del sistema." )
+    info_table.add_row_to_table(markup.label_set_markup(Info.label()), markup.text_set_markup(Info.text()), 2, "Arquitectura del sistema.")
 
-    print __name__
+    #rint __name__
