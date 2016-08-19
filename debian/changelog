@@ -1,3 +1,9 @@
+huayra-about (0.2.1) unstable; urgency=medium
+
+  * agregado 'zonda' en plugin/01versiones
+
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 19 Aug 2016 02:26:14 -0300
+
 huayra-about (0.2.0) unstable; urgency=medium
 
   * Rasti (nueva estructura con plugins)
