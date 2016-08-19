@@ -29,25 +29,21 @@ rasti.load()
 def set_clipboard(text):
     clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
     clipboard.set_text(text)
-#
 
 
 def on_window_delete_event(widget, event):
     return False
-#
 
 
 def on_window_destroy(widget):
     gtk.main_quit()
     return False
-#
 
 
 def on_close_clicked(widget):
     gtk.main_quit()
     return False
-#
-#
+
 # row -> present
 # gui
 window = gtk.Window()
