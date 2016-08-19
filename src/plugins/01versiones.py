@@ -37,7 +37,7 @@ def found_suites_from_sources():
 
     found = list(set(re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE)))
 
-    huayra_suites = ['brisa', 'mate-brisa', 'pampero', 'mate-pampero', 'sud', 'torbellino']
+    huayra_suites = ['brisa', 'mate-brisa', 'pampero', 'mate-pampero', 'sud', 'zonda', 'torbellino']
     huayras = []
     for suite in huayra_suites:
         found, huayras = proc_found(found, huayras, suite)
