@@ -9,8 +9,6 @@ from subprocess import check_output
 
 from aptsources import sourceslist
 
-# present -> suites -> sources
-
 
 def get_suites(sources):
     suites = []
@@ -81,7 +79,9 @@ def huayra():
     else:
         try:
             huayra_raw_ver = open('/etc/huayra_version', 'r').read()[:-1]
-            if huayra_raw_ver >= "3.0":
+            if huayra_raw_ver >= "4.0":
+                huayra_code_name = 'zonda'
+            elif huayra_raw_ver >= "3.0":
                 huayra_code_name = 'sud'
             elif huayra_raw_ver >= "2.0":
                 huayra_code_name = 'pampero'
