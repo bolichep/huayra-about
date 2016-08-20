@@ -17,14 +17,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
+import markup
+import info_table
 import os.path
 import subprocess
+
 
 LABEL = u'Arquitectura'
 
 
 class Info(object):
+
     @staticmethod
     def text():
         cmd = ['uname', '-m']
@@ -45,3 +48,8 @@ class Info(object):
 
 if __name__ == '__main__':
     print '{0}: {1}'.format(Info.label(), Info.text())
+
+else:
+    info_table.add_row_to_table(markup.label_set_markup(Info.label()), markup.text_set_markup(Info.text()), 2, "Arquitectura del sistema.")
+
+    #rint __name__

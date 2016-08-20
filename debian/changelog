@@ -1,17 +1,30 @@
-huayra-about (0.1.18) experimental; urgency=medium
+huayra-about (0.2.2) unstable; urgency=medium
 
-  * Agregado de icono como hicolor
-  * Cambiado read/regex por aptsources(python-apt) para obtener suites
-  * Cambio comando uname por llamada os.uname()
-  * Cambio comando lsb-release por read /etc/lsb-release
+  * agregado 'zonda' en control del archivo /etc/huayra_version
+  * cambio cmds lscpu y free por chequeo de /proc/cpuinfo, /proc/meminfo 
+  * cambio read/regex por aptsources(python-apt) para obtener suites
+  * cambio comando uname por llamada os.uname()
+  * cambio comando lsb-release por chequeo de archivo /etc/lsb-release
 
- -- Pedro Boliche <bolichep@gmail.com>  Sun, 15 Nov 2015 03:14:46 -0300
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 19 Aug 2016 23:58:48 -0300
 
-huayra-about (0.1.15) unstable; urgency=medium
+huayra-about (0.2.1) unstable; urgency=medium
 
-  * Agregado de dependencias
+  * agregado 'zonda' en plugin/01versiones
 
- -- Pedro Boliche <bolichep@gmail.com>  Wed, 07 Oct 2015 05:27:33 -0300
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 19 Aug 2016 02:26:14 -0300
+
+huayra-about (0.2.0) unstable; urgency=medium
+
+  * Rasti (nueva estructura con plugins)
+
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 19 Aug 2016 02:14:55 -0300
+
+huayra-about (0.1.16) unstable; urgency=medium
+
+  * dummy with rasti-suelto
+
+ -- Pedro Boliche <bolichep@gmail.com>  Thu, 05 Nov 2015 23:40:58 -0300
 
 huayra-about (0.1.14) experimental; urgency=medium
 
