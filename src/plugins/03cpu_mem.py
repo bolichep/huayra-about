@@ -8,21 +8,23 @@ from subprocess import Popen, PIPE
 
 
 # Memoria
-memo = (Popen(['free', '-m'], stdout=PIPE).stdout.read()).split()
+memo = open('/proc/meminfo').read().split()
 mem_label = markup.label_set_markup('Memoria')
-mem_texto = markup.text_set_markup(memo[7] + " Mb")
+mem_texto = markup.text_set_markup(str(int(memo[1]) / 1024) + " MB")
 
 # CPU
 s = ""
-micro = Popen(['lscpu'], stdout=PIPE).stdout.read()
+micro = open('/proc/cpuinfo').read()
 micro = (s.join(micro)).split()
 micro_label = markup.label_set_markup('Microprocesador')
 
 x = 0
-while micro[x] != "name:":
+while micro[x] != "name":
     x += 1
+
+x += 1  # skip ":"
 micro_texto = ""
-while micro[x + 1] != "Stepping:":
+while micro[x + 1] != "stepping":
     micro_texto = micro_texto + micro[x + 1] + " "
     x += 1
 micro_texto = markup.text_set_markup(micro_texto)
