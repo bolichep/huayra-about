@@ -4,24 +4,21 @@
 import markup
 import info_table
 import glob
-import re
-# from subprocess import check_output, Popen, PIPE
+
 from subprocess import check_output
 
+from aptsources import sourceslist
 
 # present -> suites -> sources
-def get_sources():
-    allsources = glob.glob('/etc/apt/sources.list.d/*.list')
-    allsources.insert(0, '/etc/apt/sources.list')
 
-    result = ''
-    for src in allsources:
-        try:
-            result += open(src).read()
-        except:
-            pass
 
-    return result
+def get_suites(sources):
+    suites = []
+    for entry in sources:
+        if (not entry.disabled):
+            suites.append(entry.dist)
+
+    return suites
 
 
 def proc_found(raw, done, distro):
@@ -33,9 +30,9 @@ def proc_found(raw, done, distro):
 
 
 def found_suites_from_sources():
-    sources = get_sources()
+    sources = sourceslist.SourcesList()
 
-    found = list(set(re.findall(r'^\s*deb(?:\s+\[.*\])?\s+(?:(?:https?://)|(?:ftp://))?(?:(?:[\w])+(?:[\./]+)?)+\s([-\w/]+).*$', sources, re.MULTILINE)))
+    found = list(set(get_suites(sources)))
 
     huayra_suites = ['brisa', 'mate-brisa', 'pampero', 'mate-pampero', 'sud', 'zonda', 'torbellino']
     huayras = []
@@ -72,12 +69,12 @@ def check_sources_huayra():
 
 def huayra():
     try:
-        lsb_list = open('/etc/lsb-release').read().replace('\n','=').split('=')
+        lsb_list = open('/etc/lsb-release').read().replace('\n', '=').split('=')
     except IOError as e:
         lsb_list = []
     lsb_release = dict(zip(lsb_list[0::2], lsb_list[1::2]))
 
-    if lsb_release.get("DISTRIB_ID") == 'Huayra': ### lsb_release is aware of huayra
+    if lsb_release.get("DISTRIB_ID") == 'Huayra':  # lsb_release is aware of huayra
         huayra_raw_ver = lsb_release.get("DISTRIB_RELEASE")
         huayra_code_name = lsb_release.get("DISTRIB_CODENAME")
 
