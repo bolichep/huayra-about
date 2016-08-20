@@ -1,3 +1,13 @@
+huayra-about (0.2.2) unstable; urgency=medium
+
+  * agregado 'zonda' en control del archivo /etc/huayra_version
+  * cambio cmds lscpu y free por chequeo de /proc/cpuinfo, /proc/meminfo 
+  * cambio read/regex por aptsources(python-apt) para obtener suites
+  * cambio comando uname por llamada os.uname()
+  * cambio comando lsb-release por chequeo de archivo /etc/lsb-release
+
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 19 Aug 2016 23:58:48 -0300
+
 huayra-about (0.2.1) unstable; urgency=medium
 
   * agregado 'zonda' en plugin/01versiones
