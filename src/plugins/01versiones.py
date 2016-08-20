@@ -71,10 +71,16 @@ def check_sources_huayra():
 
 
 def huayra():
-    lsb_release = check_output(['lsb_release', '-sirc']).split()
-    if lsb_release[0] == 'Huayra':  # lsb_release is aware of huayra
-        huayra_raw_ver = lsb_release[1]
-        huayra_code_name = lsb_release[2]
+    try:
+        lsb_list = open('/etc/lsb-release').read().replace('\n','=').split('=')
+    except IOError as e:
+        lsb_list = []
+    lsb_release = dict(zip(lsb_list[0::2], lsb_list[1::2]))
+
+    if lsb_release.get("DISTRIB_ID") == 'Huayra': ### lsb_release is aware of huayra
+        huayra_raw_ver = lsb_release.get("DISTRIB_RELEASE")
+        huayra_code_name = lsb_release.get("DISTRIB_CODENAME")
+
     else:
         try:
             huayra_raw_ver = open('/etc/huayra_version', 'r').read()[:-1]
