@@ -98,7 +98,7 @@ def draw_background(widget, event):
 vbox.connect('expose-event', draw_background)
 
 
-fixed.put(info_table.info_table, 0, 220)
+fixed.put(info_table.table, 0, 220)
 fixed.put(button_copy, 480, 280)
 fixed.put(button_close, 480, 330)
 
