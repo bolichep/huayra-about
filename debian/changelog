@@ -1,3 +1,9 @@
+huayra-about (0.2.3) unstable; urgency=medium
+
+  * reparado boton copiar al portapapeles 
+
+ -- Pedro Boliche <bolichep@gmail.com>  Mon, 22 Aug 2016 22:36:34 -0300
+
 huayra-about (0.2.2) unstable; urgency=medium
 
   * agregado 'zonda' en control del archivo /etc/huayra_version
