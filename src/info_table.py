@@ -36,6 +36,9 @@ def add_row_to_table(label_label, label_text, row, tooltip="", destino="all"):
     if destino == "all" or destino == "cli":
         salida_cli += label_label + ': ' + label_text + '\n'
 
+def solo_texto():
+    info_version.set_markup(salida_cli)
+    return info_version.get_text()
 
 """
 info_version.set_markup(

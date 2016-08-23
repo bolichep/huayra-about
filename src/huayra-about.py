@@ -84,7 +84,7 @@ button_copy = gtk.Button(label=" Copiar ")
 button_copy.set_tooltip_text("Copia al portapapeles")
 button_close.connect("clicked", on_close_clicked)
 button_close.connect_object("clicked", gtk.Widget.destroy, window)
-button_copy.connect("clicked", lambda x: set_clipboard(info_version.get_text()))
+button_copy.connect("clicked", lambda x: set_clipboard(info_table.solo_texto()))
 
 
 def draw_background(widget, event):
@@ -118,5 +118,4 @@ if __name__ == '__main__':
         window.show_all()
         gtk.main()
     if args.tty:
-        info_table.info_version.set_markup(info_table.salida_cli)
-        print info_table.info_version.get_text()
+        print info_table.solo_texto()
