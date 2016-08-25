@@ -26,6 +26,17 @@ rasti.load()
 #
 
 
+def button_press(widget, event):
+    if event.type == gtk.gdk.BUTTON_PRESS:
+        widget.popup(None, None, None, event.button, event.time)
+        return True
+    return False
+
+
+def menu_item_copy_response(widget, string):
+    set_clipboard(info_table.solo_texto())
+
+
 def set_clipboard(text):
     clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
     clipboard.set_text(text)
@@ -43,6 +54,7 @@ def on_window_destroy(widget):
 def on_close_clicked(widget):
     gtk.main_quit()
     return False
+
 
 # row -> present
 # gui
@@ -80,11 +92,18 @@ if 'pixbuf' in locals():
 fixed = gtk.Fixed()
 
 button_close = gtk.Button(label=" Cerrar ")
-button_copy = gtk.Button(label=" Copiar ")
-button_copy.set_tooltip_text("Copia al portapapeles")
 button_close.connect("clicked", on_close_clicked)
 button_close.connect_object("clicked", gtk.Widget.destroy, window)
-button_copy.connect("clicked", lambda x: set_clipboard(info_table.solo_texto()))
+button_close.set_tooltip_text("Cerrar acerca de Huayra")
+
+menu = gtk.Menu()
+menu_item_copy = gtk.MenuItem("Copiar")
+menu_item_copy.set_tooltip_text("Copia al portapapeles")
+menu.append(menu_item_copy)
+menu_item_copy.connect("activate", menu_item_copy_response, " Texto")
+menu_item_copy.show()
+button_menu = gtk.Button(label="  Más  ")
+button_menu.connect_object("event", button_press, menu)
 
 
 def draw_background(widget, event):
@@ -99,7 +118,7 @@ vbox.connect('expose-event', draw_background)
 
 
 fixed.put(info_table.table, 0, 220)
-fixed.put(button_copy, 480, 280)
+fixed.put(button_menu, 480, 280)
 fixed.put(button_close, 480, 330)
 
 vbox.add(fixed)
