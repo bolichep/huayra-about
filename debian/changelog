@@ -1,3 +1,9 @@
+huayra-about (0.2.4) unstable; urgency=medium
+
+  * cambio boton 'copiar' por 'mas' con popup menu 'copiar'
+
+ -- Pedro Boliche <bolichep@gmail.com>  Thu, 25 Aug 2016 00:30:15 -0300
+
 huayra-about (0.2.3) unstable; urgency=medium
 
   * reparado boton copiar al portapapeles 
