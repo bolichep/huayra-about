@@ -1,3 +1,14 @@
+huayra-about (0.2.5) unstable; urgency=medium
+
+  * por Fernando Toledo <ragnarok@docksud.com.ar>
+    * Agregando formato del paquete.
+    * Fix lintian warning
+    * Cambio de mantenedor
+
+  * Agregado dependencias: python-gtk2 y python-apt
+
+ -- Pedro Boliche <bolichep@gmail.com>  Fri, 08 Sep 2017 22:34:12 -0300
+
 huayra-about (0.2.4) unstable; urgency=medium
 
   * cambio boton 'copiar' por 'mas' con popup menu 'copiar'
